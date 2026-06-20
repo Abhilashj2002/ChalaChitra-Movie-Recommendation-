@@ -1,0 +1,6 @@
+@echo off
+cd /d "%~dp0"
+echo Installing frontend dependencies...
+call npm install
+echo Done! Starting frontend dev server...
+npm run client

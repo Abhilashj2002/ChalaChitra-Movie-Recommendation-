@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ChalaChitra Project Overview</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #09090b;
+      --panel: #121216;
+      --panel-2: #18181b;
+      --text: #f8fafc;
+      --muted: #a1a1aa;
+      --line: #2f2f36;
+      --accent: #f59e0b;
+      --accent-2: #4f46e5;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 44px 22px 64px;
+    }
+
+    header {
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 28px;
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(34px, 6vw, 64px);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin: 0 0 16px;
+      font-size: 24px;
+    }
+
+    p {
+      margin: 0 0 14px;
+      color: var(--muted);
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .badge {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 7px 12px;
+      background: var(--panel);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin: 24px 0 34px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      overflow: hidden;
+    }
+
+    .card img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      background: #050505;
+    }
+
+    .card .body {
+      padding: 16px;
+    }
+
+    .card h3 {
+      margin: 0 0 6px;
+      font-size: 18px;
+    }
+
+    section {
+      margin-top: 34px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 22px;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    code,
+    pre {
+      font-family: Consolas, Monaco, monospace;
+    }
+
+    pre {
+      margin: 12px 0 0;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow-x: auto;
+      background: #050507;
+      color: #e5e7eb;
+    }
+
+    ul,
+    ol {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--muted);
+    }
+
+    li + li {
+      margin-top: 8px;
+    }
+
+    strong {
+      color: var(--text);
+    }
+
+    .note {
+      border-left: 4px solid var(--accent);
+      padding-left: 14px;
+      color: var(--muted);
+    }
+
+    a {
+      color: #93c5fd;
+    }
+
+    @media (max-width: 780px) {
+      .grid,
+      .split {
+        grid-template-columns: 1fr;
+      }
+
+      main {
+        padding: 28px 14px 44px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>ChalaChitra</h1>
+      <p>React + Vite movie discovery app with chatbot features, an admin dashboard, an Express backend, and local SQLite storage.</p>
+      <div class="badge-row">
+        <span class="badge">Frontend: React + Vite</span>
+        <span class="badge">Backend: Express</span>
+        <span class="badge">Database: SQLite / sql.js</span>
+        <span class="badge">Movie Data: TMDB</span>
+        <span class="badge">AI: Gemini optional</span>
+      </div>
+    </header>
+
+    <section>
+      <h2>Project Screenshots</h2>
+      <div class="grid">
+        <article class="card">
+          <img src="docs/images/project-home.png" alt="ChalaChitra home page screenshot">
+          <div class="body">
+            <h3>Homepage</h3>
+            <p>Movie discovery landing experience with featured content and browsing sections.</p>
+          </div>
+        </article>
+        <article class="card">
+          <img src="docs/images/project-chatbot.svg" alt="ChalaChitra chatbot page screenshot">
+          <div class="body">
+            <h3>Chatbot</h3>
+            <p>Assistant interface for movie suggestions, actor queries, genres, languages, and mood prompts.</p>
+          </div>
+        </article>
+        <article class="card">
+          <img src="docs/images/project-login.png" alt="ChalaChitra login page screenshot">
+          <div class="body">
+            <h3>Login Page</h3>
+            <p>Authentication screen for demo users and administrators.</p>
+          </div>
+        </article>
+        <article class="card">
+          <img src="docs/images/project-admin.png" alt="ChalaChitra admin dashboard screenshot">
+          <div class="body">
+            <h3>Admin Dashboard</h3>
+            <p>Admin area for settings, analytics, chatbot controls, homepage controls, and API-key configuration.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Frontend and Backend</h2>
+      <div class="split">
+        <div>
+          <h3>Frontend</h3>
+          <ul>
+            <li>Location: project root</li>
+            <li>Framework: React with Vite</li>
+            <li>Default URL: <code>http://localhost:3001</code></li>
+          </ul>
+          <pre>npm install
+npm run dev</pre>
+        </div>
+        <div>
+          <h3>Backend</h3>
+          <ul>
+            <li>Location: <code>server</code> folder</li>
+            <li>Runtime: Node.js + Express</li>
+            <li>Default URL: <code>http://localhost:3002</code></li>
+          </ul>
+          <pre>cd server
+npm install
+npm run dev</pre>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>API Keys and TMDB</h2>
+      <p class="note">Do not commit real API keys. Keep real keys in <code>.env.local</code>, local admin settings, or deployment secrets only.</p>
+      <ol>
+        <li>Copy <code>.env.example</code> to <code>.env.local</code>.</li>
+        <li>Add your own values for <code>VITE_TMDB_API_KEY</code>, <code>VITE_GEMINI_API_KEY</code>, and optional <code>VITE_OMDB_API_KEY</code>.</li>
+        <li>Restart the frontend after editing <code>.env.local</code>.</li>
+        <li>Admins may also add the TMDB key in the Admin Dashboard for local app settings.</li>
+      </ol>
+      <pre>VITE_GEMINI_API_KEY=your_real_gemini_api_key
+VITE_TMDB_API_KEY=your_real_tmdb_api_key
+VITE_TMDB_BASE_URL=https://api.themoviedb.org/3
+VITE_OMDB_API_KEY=your_real_omdb_api_key</pre>
+    </section>
+
+    <section>
+      <h2>Demo Login</h2>
+      <pre>Admin: chalachitra@gmail.com / Admin@1234
+User:  user@cinema.com / user123</pre>
+    </section>
+
+    <section>
+      <h2>Before GitHub Upload</h2>
+      <ul>
+        <li>Keep <code>.env.local</code> private and uncommitted.</li>
+        <li>Keep <code>.env.example</code> as placeholders only.</li>
+        <li>Do not commit <code>server/cinema.db</code> if it contains users, private settings, or saved API keys.</li>
+        <li>Rotate provider keys if any real key was committed earlier.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

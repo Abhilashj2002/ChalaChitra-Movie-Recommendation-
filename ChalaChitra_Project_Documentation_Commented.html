@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChalaChitra - Technical Documentation with Comments & Data Flow</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 20mm;
+            background: #f5f5f5;
+        }
+        
+        .page {
+            background: white;
+            padding: 25mm;
+            margin-bottom: 20mm;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            page-break-after: always;
+        }
+        
+        h1 {
+            color: #1a1a2e;
+            font-size: 28pt;
+            border-bottom: 4px solid #e94560;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #16213e;
+            font-size: 18pt;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-left: 4px solid #e94560;
+            padding-left: 15px;
+        }
+        
+        h3 {
+            color: #0f3460;
+            font-size: 14pt;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 14pt;
+            color: #666;
+            margin-bottom: 40px;
+        }
+        
+        .comment-box {
+            background: #e8f4fd;
+            border-left: 4px solid #2196F3;
+            padding: 12px 15px;
+            margin: 15px 0;
+            font-size: 10pt;
+        }
+        
+        .comment-box::before {
+            content: "💡 COMMENT: ";
+            font-weight: bold;
+            color: #1565C0;
+        }
+        
+        .code-comment {
+            background: #fff8e1;
+            border-left: 4px solid #FFC107;
+            padding: 10px 15px;
+            margin: 10px 0;
+            font-size: 10pt;
+            font-style: italic;
+        }
+        
+        .code-comment::before {
+            content: "📝 USAGE: ";
+            font-weight: bold;
+            color: #F57C00;
+            font-style: normal;
+        }
+        
+        .flow-box {
+            background: #f3e5f5;
+            border-left: 4px solid #9C27B0;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .flow-box::before {
+            content: "🔄 DATA FLOW: ";
+            font-weight: bold;
+            color: #7B1FA2;
+        }
+        
+        .info-box {
+            background: #f8f9fa;
+            border-left: 4px solid #e94560;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .tech-item {
+            background: #16213e;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .tech-item h4 {
+            color: #e94560;
+            margin-bottom: 5px;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Consolas', monospace;
+            font-size: 10pt;
+        }
+        
+        pre {
+            background: #1a1a2e;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 9pt;
+            line-height: 1.4;
+            margin: 15px 0;
+        }
+        
+        pre .comment {
+            color: #6272a4;
+        }
+        
+        pre .string {
+            color: #f1fa8c;
+        }
+        
+        pre .keyword {
+            color: #ff79c6;
+        }
+        
+        pre .function {
+            color: #50fa7b;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 10pt;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        
+        th {
+            background: #16213e;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .endpoint {
+            background: #e8f4f8;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-family: monospace;
+            display: inline-block;
+            margin: 3px;
+        }
+        
+        .method-get { color: #28a745; font-weight: bold; }
+        .method-post { color: #007bff; font-weight: bold; }
+        .method-put { color: #ffc107; font-weight: bold; }
+        .method-delete { color: #dc3545; font-weight: bold; }
+        
+        ul, ol {
+            margin: 15px 0 15px 25px;
+        }
+        
+        li {
+            margin: 8px 0;
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .pros, .cons {
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .pros {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .cons {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .pros h4 { color: #155724; }
+        .cons h4 { color: #721c24; }
+        
+        .cover {
+            text-align: center;
+            padding: 60px 0;
+        }
+        
+        .cover h1 {
+            font-size: 36pt;
+            border: none;
+            margin-bottom: 20px;
+        }
+        
+        .cover .subtitle {
+            font-size: 16pt;
+            color: #666;
+        }
+        
+        .meta {
+            margin-top: 60px;
+            font-size: 11pt;
+            color: #666;
+        }
+        
+        .file-path {
+            background: #e3f2fd;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 9pt;
+            display: inline-block;
+            margin: 3px 0;
+        }
+        
+        .diagram {
+            background: #fafafa;
+            border: 2px solid #ddd;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 10pt;
+            line-height: 1.8;
+        }
+        
+        .arrow {
+            color: #e94560;
+            font-weight: bold;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .page {
+                box-shadow: none;
+                margin: 0;
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Cover Page -->
+<div class="page cover">
+    <h1>🎬 CHALACHITRA</h1>
+    <p class="subtitle">Intelligent Movie Discovery Platform</p>
+    <p class="subtitle">Complete Technical Documentation with Code Comments & Data Flow Diagrams</p>
+    
+    <div class="meta">
+        <p><strong>Version:</strong> 1.0.0</p>
+        <p><strong>Date:</strong> May 2026</p>
+        <p><strong>Tech Stack:</strong> React + TypeScript + Express + SQLite</p>
+    </div>
+</div>
+
+<!-- Real Project Screenshots -->
+<div class="page">
+    <h1>Application Screenshots</h1>
+    <div class="comment-box">
+        These are real screenshots captured from the running ChalaChitra project. They show what the browser UI looks like for public, login, settings, and admin workflows.
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr; gap: 28px; margin: 28px 0 48px;">
+        <figure style="margin: 0; border: 1px solid #ddd; border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 4px 14px rgba(0,0,0,0.08);">
+            <img src="docs/images/project-home.png" alt="ChalaChitra home page screenshot" style="display: block; width: 100%; height: auto;">
+            <figcaption style="padding: 14px 18px; color: #444; font-size: 10.5pt;">
+                <strong>Home page:</strong> The public discovery screen where users browse movies, series, anime, language collections, and recommendation sections.
+            </figcaption>
+        </figure>
+
+        <figure style="margin: 0; border: 1px solid #ddd; border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 4px 14px rgba(0,0,0,0.08);">
+            <img src="docs/images/project-login.png" alt="ChalaChitra login page screenshot" style="display: block; width: 100%; height: auto;">
+            <figcaption style="padding: 14px 18px; color: #444; font-size: 10.5pt;">
+                <strong>Login page:</strong> The authentication screen used by normal users and admins before accessing protected features.
+            </figcaption>
+        </figure>
+
+        <figure style="margin: 0; border: 1px solid #ddd; border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 4px 14px rgba(0,0,0,0.08);">
+            <img src="docs/images/project-settings.png" alt="ChalaChitra settings page screenshot" style="display: block; width: 100%; height: auto;">
+            <figcaption style="padding: 14px 18px; color: #444; font-size: 10.5pt;">
+                <strong>Settings page:</strong> The user settings area for account preferences, appearance, and configuration-related workflows.
+            </figcaption>
+        </figure>
+
+        <figure style="margin: 0; border: 1px solid #ddd; border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 4px 14px rgba(0,0,0,0.08);">
+            <img src="docs/images/project-admin.png" alt="ChalaChitra admin dashboard screenshot" style="display: block; width: 100%; height: auto;">
+            <figcaption style="padding: 14px 18px; color: #444; font-size: 10.5pt;">
+                <strong>Admin dashboard:</strong> The admin control area for API configuration, feature toggles, analytics, and project management settings.
+            </figcaption>
+        </figure>
+    </div>
+</div>
+
+<!-- Page 1: Project Overview -->
+<div class="page">
+    <h1>1. Project Overview with Comments</h1>
+    
+    <div class="comment-box">
+        This section explains the overall project structure and why certain architectural decisions were made. Understanding the architecture helps in debugging and extending the application.
+    </div>
+    
+    <h2>1.1 Introduction</h2>
+    <p>ChalaChitra is an intelligent movie discovery platform that combines modern web technologies with AI-powered recommendations.</p>
+    
+    <div class="flow-box">
+        User Request → React Frontend → Express Backend → SQLite DB → Response<br>
+        External APIs: TMDB (movie data) + Gemini (AI chatbot)
+    </div>
+    
+    <div class="code-comment">
+        The application uses a 3-tier architecture: Presentation Layer (React), Business Logic Layer (Express), and Data Layer (SQLite).
+    </div>
+    
+    <div class="info-box">
+        <strong>Key Features:</strong>
+        <ul>
+            <li>TMDB API integration for real-time movie data</li>
+            <li>AI-powered chatbot using Google Gemini</li>
+            <li>User authentication with role-based access</li>
+            <li>Watch history and ratings tracking</li>
+            <li>Multi-language movie support</li>
+            <li>Responsive React frontend</li>
+            <li>SQLite database for persistent storage</li>
+        </ul>
+    </div>
+    
+    <h2>1.2 Architecture Overview</h2>
+    
+    <div class="comment-box">
+        The diagram below shows how data flows between components. Understanding this helps trace bugs from UI to database.
+    </div>
+    
+    <div class="diagram">
+┌─────────────────────────────────────────────────────────────────────────┐
+│                              CLIENT LAYER                                │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐        │
+│  │  React Components│  │  Service Layer  │  │  State Management│        │
+│  │  (UI Rendering)  │──│  (API Calls)    │──│  (Hooks/Context)│        │
+│  └─────────────────┘  └─────────────────┘  └─────────────────┘        │
+│         │                    │                    │                      │
+│         ▼                    ▼                    ▼                      │
+│  ┌─────────────────────────────────────────────────────────────────┐  │
+│  │                    services/tmdb.ts                              │  │
+│  │  - Caches API responses (Map data structure)                    │  │
+│  │  - Retries failed requests (exponential backoff)                │  │
+│  │  - Normalizes TMDB data to internal Movie type                   │  │
+│  └─────────────────────────────────────────────────────────────────┘  │
+│                              │                                          │
+└──────────────────────────────┼──────────────────────────────────────────┘
+                               │ HTTP Request
+                               ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                              SERVER LAYER                                │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐        │
+│  │  Express Routes  │  │  Middleware      │  │  SQLite DB       │        │
+│  │  (API Endpoints) │──│  (CORS, JSON)    │──│  (cinema.db)     │        │
+│  └─────────────────┘  └─────────────────┘  └─────────────────┘        │
+│         │                    │                    │                      │
+└─────────┼────────────────────┼────────────────────┼──────────────────────┘
+          │                    │                    │
+          ▼                    ▼                    ▼
+┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐
+│   TMDB API      │  │  Gemini API     │  │  SQLite File    │
+│ (The Movie DB)  │  │  (Google AI)    │  │  (Local Storage)│
+└─────────────────┘  └─────────────────┘  └─────────────────┘
+    </div>
+    
+    <div class="code-comment">
+        Location: Frontend services connect to backend at <code>http://localhost:3002/api</code>, defined in <span class="file-path">services/simpleDb.ts:3</span>
+    </div>
+</div>
+
+<!-- Page 2: Frontend Technologies with Comments -->
+<div class="page">
+    <h1>2. Frontend Architecture with Comments</h1>
+    
+    <div class="comment-box">
+        This section explains the frontend technology choices with code location references. Each technology serves a specific purpose in the application.
+    </div>
+    
+    <h2>2.1 Why React Was Chosen</h2>
+    
+    <div class="tech-stack">
+        <div class="tech-item">
+            <h4>React 19</h4>
+            <p>Latest version with improved performance and new features</p>
+        </div>
+        <div class="tech-item">
+            <h4>TypeScript</h4>
+            <p>Type safety and better developer experience</p>
+        </div>
+        <div class="tech-item">
+            <h4>Vite 6</h4>
+            <p>Fast build tool with HMR (Hot Module Replacement)</p>
+        </div>
+        <div class="tech-item">
+            <h4>TailwindCSS</h4>
+            <p>Utility-first CSS framework for rapid UI development</p>
+        </div>
+    </div>
+    
+    <div class="code-comment">
+        Location: Tech stack defined in <span class="file-path">package.json</span>. React version 19 provides Concurrent Features for better rendering performance.
+    </div>
+    
+    <h3>Data Flow: React Component Lifecycle</h3>
+    
+    <div class="diagram">
+Component Mount
+      │
+      ▼
+┌─────────────────┐
+│  useEffect()    │ -------- API Call (services/tmdb.ts)
+│  (Initialization)│          │
+└─────────────────┘          ▼
+      │                    ┌─────────────────┐
+      │                    │  Cache Check    │ ◄── Map.has(url)
+      ▼                    │  (tmdbFetch)    │
+┌─────────────────┐         └─────────────────┘
+│  State Update   │                  │
+│  setMovies()    │◄─────────────────┘
+└─────────────────┘         │
+      │                     │ Cache Hit
+      ▼                     ▼
+┌─────────────────┐    ┌─────────────────┐
+│  Re-render UI   │    │  Network Request│
+│  (Movie Cards)  │    │  (fetch API)    │
+└─────────────────┘    └─────────────────┘
+                              │
+                              ▼
+                       ┌─────────────────┐
+                       │  Store in Cache │ ──── Map.set(url, data)
+                       │  (10min expiry) │
+                       └─────────────────┘
+    </div>
+    
+    <div class="flow-box">
+        The caching mechanism uses JavaScript's Map data structure (not localStorage) for in-memory storage, providing O(1) lookup time. Cache expires based on content type (trending: 10min, details: 24hrs).
+    </div>
+    
+    <h2>2.2 React Component Structure</h2>
+    
+    <div class="comment-box">
+        Components are organized by feature. Shared UI elements are in the components/ folder, pages are in pages/ folder.
+    </div>
+    
+    <pre>
+// File: components/MovieCard.tsx (Example component structure)
+// Location: Used in homepage, search results, recommendations
+
+interface MovieCardProps {
+  movie: Movie;           // Type from types.ts
+  onClick?: () =&gt; void;   // Optional click handler
+  showRating?: boolean;   // Conditional rendering flag
+}
+
+export const MovieCard: React.FC&lt;MovieCardProps&gt; = ({ 
+  movie, 
+  onClick, 
+  showRating = false 
+}) =&gt; {
+  // useState for local UI state (hover, expanded)
+  const [isHovered, setIsHovered] = useState(false);
+  
+  // useEffect for side effects (analytics, lazy loading)
+  useEffect(() =&gt; {
+    // Intersection Observer for lazy loading
+  }, []);
+  
+  return (
+    &lt;div onClick={onClick}&gt;
+      &lt;img src={getImageUrl(movie.poster_path)} /&gt;
+      &lt;h3&gt;{movie.title}&lt;/h3&gt;
+      {showRating &amp;&amp; &lt;Rating stars={movie.vote_average} /&gt;}
+    &lt;/div&gt;
+  );
+};
+    </pre>
+    
+    <div class="code-comment">
+        Pattern: Props interface defines the component's API. Optional props use ? syntax. Default values set in destructuring.
+    </div>
+</div>
+
+<!-- Page 3: Frontend Functions with Data Flow -->
+<div class="page">
+    <h1>3. Frontend Code Functions with Data Flow</h1>
+    
+    <div class="comment-box">
+        This section maps every major function to its location in the codebase and explains the data flow with visual diagrams.
+    </div>
+    
+    <h2>3.1 TMDB Service - tmdbFetch()</h2>
+    
+    <div class="file-path">Location: services/tmdb.ts:87-198</div>
+    
+    <h3>Function Signature:</h3>
+    <pre>
+const tmdbFetch = async (
+  endpoint: string,        // e.g., "/trending/movie/week"
+  apiKey: string,           // TMDB API key
+  params: Record&lt;string, string&gt; = {},  // Query params
+  tag: CacheTag = 'trending'             // Cache category
+) =&gt; { /* ... */ }
+    </pre>
+    
+    <div class="flow-box">
+        <strong>Data Flow:</strong><br>
+        1. Check cache Map for existing data<br>
+        2. If valid (not expired), return cached data<br>
+        3. If expired/missing, make HTTP request<br>
+        4. Store response in cache Map<br>
+        5. Return data to caller
+    </div>
+    
+    <div class="diagram">
+┌────────────────────────────────────────────────────────────────┐
+│                    tmdbFetch() Data Flow                        │
+├────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  Input: endpoint="/trending/movie/week"                         │
+│         apiKey="set_this_in_env_or_admin_settings"              │
+│         params={page: "1"}                                     │
+│         tag="trending"                                          │
+│                                                                 │
+│         │                                                       │
+│         ▼                                                       │
+│  ┌─────────────────────┐                                       │
+│  │ 1. Build Cache Key  │─────► URL string used as Map key      │
+│  └─────────────────────┘                                       │
+│         │                                                       │
+│         ▼                                                       │
+│  ┌─────────────────────┐    YES    ┌─────────────────────┐   │
+│  │ 2. Check cache.has()│──────────►│ Return cached.data  │   │
+│  │    & not expired?   │           │ (Fast path - O(1))  │   │
+│  └─────────────────────┘           └─────────────────────┘   │
+│         │ NO                                                    │
+│         ▼                                                       │
+│  ┌─────────────────────┐                                       │
+│  │ 3. Check inFlight   │─────► Return existing Promise         │
+│  │    (deduplication)  │     (prevents duplicate requests)     │
+│  └─────────────────────┘                                       │
+│         │                                                       │
+│         ▼                                                       │
+│  ┌─────────────────────┐                                       │
+│  │ 4. Create Promise   │─────► fetchWithTimeout(url, 3)       │
+│  │    Store in inFlight  │     (3 retries with exponential      │
+│  └─────────────────────┘      backoff: 500ms, 1000ms, 1500ms)  │
+│         │                                                       │
+│         ▼                                                       │
+│  ┌─────────────────────┐                                       │
+│  │ 5. Parse Response   │─────► response.json()                 │
+│  │ 6. Filter adult=true│─────► Remove adult content             │
+│  │ 7. Store in cache   │─────► cache.set(url, {data, timestamp}│
+│  │ 8. Remove inFlight  │─────► inFlight.delete(url)             │
+│  │ 9. Return data      │                                       │
+│  └─────────────────────┘                                       │
+│                                                                 │
+└────────────────────────────────────────────────────────────────┘
+    </div>
+    
+    <div class="code-comment">
+        Key Algorithm: Exponential backoff retries (line 79-81) wait 500ms × (attempt + 1) before retrying failed requests.
+    </div>
+    
+    <h2>3.2 TMDB Service - getTrendingCombined()</h2>
+    
+    <div class="file-path">Location: services/tmdb.ts:224-281</div>
+    
+    <h3>Algorithm: Parallel Fetch with Deduplication</h3>
+    
+    <pre>
+const getTrendingCombined = async (apiKey: string, minItems: number = 20) =&gt; {
+  // Promise.allSettled - runs both requests in parallel
+  // Unlike Promise.all, doesn't fail if one request fails
+  const [movieRes, tvRes] = await Promise.allSettled([
+    tmdbFetch('/trending/movie/week', apiKey, { page: '1' }, 'trending'),
+    tmdbFetch('/trending/tv/week', apiKey, { page: '1' }, 'trending')
+  ]);
+  
+  // Extract results or use empty array if rejected
+  const movies = movieRes.status === 'fulfilled' ? movieRes.value?.results || [] : [];
+  const tvShows = tvRes.status === 'fulfilled' ? tvRes.value?.results || [] : [];
+  
+  // Deduplication: filter by ID, keep first occurrence
+  const unique = combined.filter((item, index, self) =&gt;
+    index === self.findIndex(m =&gt; m.id === item.id)
+  );
+  
+  // Sort by popularity (descending)
+  return unique.sort((a, b) =&gt; (b.popularity || 0) - (a.popularity || 0));
+};
+    </pre>
+    
+    <div class="flow-box">
+        <strong>Why Promise.allSettled?</strong><br>
+        If TMDB's movie API is down but TV API works, we still show TV shows instead of failing completely. Graceful degradation.
+    </div>
+    
+    <h2>3.3 SimpleDB - Backend Communication</h2>
+    
+    <div class="file-path">Location: services/simpleDb.ts:68-90</div>
+    
+    <h3>apiRequest() Function:</h3>
+    
+    <pre>
+async function apiRequest&lt;T&gt;(endpoint: string, options?: RequestInit): Promise&lt;T&gt; {
+  // AbortSignal.timeout(5000) - auto-cancel after 5 seconds
+  const response = await fetch(`${API_BASE}${endpoint}`, {
+    ...options,
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    signal: AbortSignal.timeout(5000)  // Prevents hanging requests
+  });
+  
+  if (!response.ok) {
+    // Try to parse error message from backend
+    const error = await response.json().catch(() =&gt; ({ error: 'Request failed' }));
+    throw new Error(error.error || `HTTP ${response.status}`);
+  }
+  
+  return response.json();
+}
+    </pre>
+    
+    <div class="comment-box">
+        AbortSignal.timeout(5000) is critical for UX - prevents users waiting indefinitely if backend is slow. Falls back to localStorage after timeout.
+    </div>
+    
+    <div class="diagram">
+┌────────────────────────────────────────────────────────────────┐
+│              SimpleDB Authentication Flow                       │
+├────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  User enters credentials                                        │
+│         │                                                       │
+│         ▼                                                       │
+│  ┌─────────────────────┐                                        │
+│  │ Login Form Submit   │                                        │
+│  └─────────────────────┘                                        │
+│         │                                                       │
+│         ▼                                                       │
+│  SimpleDB.users.authenticate(email, password)                   │
+│         │                                                       │
+│         ▼                                                       │
+│  ┌─────────────────────┐                                        │
+│  │ POST /users/auth    │──────► Backend SQLite query:          │
+│  │ {email, password}   │        SELECT * FROM users             │
+│  └─────────────────────┘        WHERE email=? AND password=?    │
+│         │                                                       │
+│         ▼                                                       │
+│  ┌─────────────────────┐    NO    ┌─────────────────────┐     │
+│  │ Response OK?        │──────────►│ Throw Error         │     │
+│  │ (200 status)        │           │ Show login error      │     │
+│  └─────────────────────┘           └─────────────────────┘     │
+│         │ YES                                                   │
+│         ▼                                                       │
+│  ┌─────────────────────┐                                        │
+│  │ Store in Auth State│──────► localStorage/sessionStorage      │
+│  │ Redirect to Home   │                                        │
+│  └─────────────────────┘                                        │
+│                                                                 │
+└────────────────────────────────────────────────────────────────┘
+    </div>
+</div>
+
+<!-- Page 4: Backend Functions -->
+<div class="page">
+    <h1>4. Backend Functions with Data Flow</h1>
+    
+    <div class="comment-box">
+        Backend is in the server/ folder. It uses Express with SQLite (sql.js) which runs in the same Node.js process - no separate database server needed.
+    </div>
+    
+    <h2>4.1 Server Initialization</h2>
+    
+    <div class="file-path">Location: server/server.cjs:1-50</div>
+    
+    <pre>
+const express = require('express');
+const cors = require('cors');
+const initDatabase = require('./db.js');
+
+const app = express();
+
+// CORS allows frontend at localhost:3001 to call backend at :3002
+app.use(cors({ origin: 'http://localhost:3001' }));
+
+// Parse JSON request bodies
+app.use(express.json());
+
+// Initialize SQLite database
+const db = initDatabase();
+
+// Mount API routes
+app.use('/api', require('./routes.js'));
+
+app.listen(3002, () =&gt; {
+  console.log('Backend running on http://localhost:3002');
+});
+    </pre>
+    
+    <div class="flow-box">
+        <strong>CORS Configuration:</strong><br>
+        Without CORS, browser would block requests from localhost:3001 to localhost:3002 due to Same-Origin Policy. CORS middleware adds Access-Control-Allow-Origin header.
+    </div>
+    
+    <h2>4.2 Database Initialization</h2>
+    
+    <div class="file-path">Location: server/db.js:1-100</div>
+    
+    <pre>
+const Database = require('sql.js');
+
+function initDatabase() {
+  // Try to load existing database from file
+  const dbPath = path.join(__dirname, 'cinema.db');
+  
+  if (fs.existsSync(dbPath)) {
+    // Load existing database
+    const filebuffer = fs.readFileSync(dbPath);
+    db = new Database.Database(filebuffer);
+  } else {
+    // Create new database with schema
+    db = new Database.Database();
+    createSchema(db);
+    insertDefaultData(db);
+  }
+  
+  // Auto-save on process exit
+  process.on('exit', () =&gt; saveDatabase(db, dbPath));
+  process.on('SIGINT', () =&gt; { saveDatabase(db, dbPath); process.exit(); });
+  
+  return db;
+}
+    </pre>
+    
+    <div class="code-comment">
+        sql.js stores the entire database in memory and writes to cinema.db on exit. This is why it's fast but has size limits (~2GB).
+    </div>
+    
+    <h2>4.3 API Routes - Authentication</h2>
+    
+    <div class="file-path">Location: server/routes.js:80-107</div>
+    
+    <pre>
+// POST /api/users/authenticate
+router.post('/users/authenticate', (req, res) =&gt; {
+  const { email, password } = req.body;
+  
+  // SQL JOIN to get user + preferences in one query
+  const user = db.prepare(`
+    SELECT u.id, u.username, u.email, u.role, u.tmdb_api_key,
+           up.genres, up.languages, up.moods, up.priority_language
+    FROM users u
+    LEFT JOIN user_preferences up ON u.id = up.user_id
+    WHERE u.email = ? AND u.password = ?
+  `).get(email, password);
+  
+  if (user) {
+    // Parse JSON strings from database
+    res.json({
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      role: user.role,
+      preferences: {
+        genres: JSON.parse(user.genres || '[]'),
+        languages: JSON.parse(user.languages || '[]'),
+        moods: JSON.parse(user.moods || '[]'),
+        priorityLanguage: u.priority_language
+      }
+    });
+  } else {
+    res.status(401).json({ error: 'Invalid credentials' });
+  }
+});
+    </pre>
+    
+    <div class="diagram">
+┌────────────────────────────────────────────────────────────────┐
+│              Backend Request-Response Cycle                   │
+├────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  Request: POST /api/users/authenticate                          │
+│  Body: {email: "chalachitra@gmail.com", password: "Admin@1234"}│
+│                                                                 │
+│         │                                                       │
+│         ▼                                                       │
+│  ┌─────────────────────┐                                        │
+│  │ Express Route       │                                        │
+│  │ router.post()       │                                        │
+│  └─────────────────────┘                                        │
+│         │                                                       │
+│         ▼                                                       │
+│  ┌─────────────────────┐                                        │
+│  │ req.body parsing    │──────► express.json() middleware       │
+│  └─────────────────────┘                                        │
+│         │                                                       │
+│         ▼                                                       │
+│  ┌─────────────────────┐                                        │
+│  │ db.prepare()        │──────► Precompiled SQL statement       │
+│  │ .get(email, pass)   │──────► Execute with parameters          │
+│  │                     │        (prevents SQL injection)         │
+│  └─────────────────────┘                                        │
+│         │                                                       │
+│         ▼                                                       │
+│  ┌─────────────────────┐    NO    ┌─────────────────────┐      │
+│  │ User found?         │──────────►│ res.status(401)     │      │
+│  │                     │           │ .json({error})       │      │
+│  └─────────────────────┘           └─────────────────────┘      │
+│         │ YES                                                   │
+│         ▼                                                       │
+│  ┌─────────────────────┐                                        │
+│  │ JSON.parse()        │──────► Convert stored JSON strings      │
+│  │ preferences fields  │        to JavaScript objects           │
+│  └─────────────────────┘                                        │
+│         │                                                       │
+│         ▼                                                       │
+│  ┌─────────────────────┐                                        │
+│  │ res.json(userData)  │──────► Send 200 with user data          │
+│  └─────────────────────┘                                        │
+│                                                                 │
+└────────────────────────────────────────────────────────────────┘
+    </div>
+    
+    <div class="comment-box">
+        <strong>SQL Injection Protection:</strong> Using parameterized queries (.get(email, password)) ensures user input is treated as data, not executable SQL. Never use string concatenation for SQL.
+    </div>
+</div>
+
+<!-- Page 5: Database Schema with Comments -->
+<div class="page">
+    <h1>5. Database Schema with Explanations</h1>
+    
+    <div class="comment-box">
+        SQLite schema uses foreign key relationships and JSON strings for flexible data storage. This hybrid approach (SQL + JSON) balances structure and flexibility.
+    </div>
+    
+    <h2>5.1 Table Relationships</h2>
+    
+    <div class="diagram">
+┌─────────────────────────────────────────────────────────────────┐
+│                    Database Entity Relationship                  │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  ┌──────────────┐         ┌──────────────────┐                   │
+│  │    users     │         │ user_preferences │                   │
+│  │──────────────│◄───────►│──────────────────│                   │
+│  │ id (PK)      │   1:1   │ user_id (FK, PK) │                   │
+│  │ username     │         │ genres (JSON)    │                   │
+│  │ email (UQ)   │         │ languages (JSON) │                   │
+│  │ password     │         │ moods (JSON)     │                   │
+│  │ role         │         │ priority_lang    │                   │
+│  └──────────────┘         └──────────────────┘                   │
+│         │                                                       │
+│         │ 1:N                                                   │
+│         ▼                                                       │
+│  ┌──────────────┐         ┌──────────────┐                      │
+│  │watch_history │         │   ratings    │                      │
+│  │──────────────│         │──────────────│                      │
+│  │ id (PK)      │         │ id (PK)      │                      │
+│  │ user_id (FK) │         │ user_id (FK) │                      │
+│  │ movie_id     │         │ movie_id     │                      │
+│  │ movie_data   │         │ rating       │                      │
+│  │ watched_at   │         │ updated_at   │                      │
+│  └──────────────┘         └──────────────┘                      │
+│                                                                 │
+│  ┌──────────────┐         ┌──────────────┐                      │
+│  │   settings   │         │   feedback   │                      │
+│  │──────────────│         │  (multiple)  │                      │
+│  │ key (PK)     │         │──────────────│                      │
+│  │ value        │         │ id (PK)      │                      │
+│  └──────────────┘         │ user_id (FK) │                      │
+│                           │ message_id   │                      │
+│                           │ rating       │                      │
+│                           │ comment      │                      │
+│                           └──────────────┘                      │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+    </div>
+    
+    <h2>5.2 Why JSON in SQLite?</h2>
+    
+    <div class="flow-box">
+        <strong>Storage Strategy:</strong><br>
+        Arrays (genres, languages, moods) are stored as JSON strings in TEXT columns instead of separate junction tables. This reduces table count and simplifies queries at the cost of losing SQL indexing on array elements.
+    </div>
+    
+    <h2>5.3 Table Creation with Comments</h2>
+    
+    <pre>
+-- users: Core authentication table
+-- Used by: Login page, Admin dashboard
+CREATE TABLE users (
+  id TEXT PRIMARY KEY,                    -- UUID v4, generated in routes.js
+  username TEXT NOT NULL,                 -- Display name
+  email TEXT UNIQUE NOT NULL,             -- Login identifier, must be unique
+  password TEXT NOT NULL,                 -- Plaintext (should use bcrypt!)
+  role TEXT DEFAULT 'USER',               -- 'ADMIN' or 'USER'
+  tmdb_api_key TEXT,                      -- Optional per-user API key
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- user_preferences: Separate table for flexible schema evolution
+-- Used by: User profile page, recommendation engine
+CREATE TABLE user_preferences (
+  user_id TEXT PRIMARY KEY,
+  genres TEXT DEFAULT '[]',               -- JSON array: [28, 35, 18]
+  languages TEXT DEFAULT '["en","kn"]',   -- JSON array: ["en", "hi", "kn"]
+  moods TEXT DEFAULT '[]',                -- JSON array: ["happy", "romantic"]
+  priority_language TEXT,                 -- Preferred language code
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- watch_history: Many-to-many with metadata
+-- Used by: Continue watching, history page
+CREATE TABLE watch_history (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id TEXT,
+  movie_id INTEGER,                       -- TMDB movie ID
+  movie_data TEXT,                        -- JSON snapshot (title, poster, etc)
+  rating INTEGER,                         -- User's rating 1-10
+  watched_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- ratings: Separate from history for quick lookup
+-- Used by: Movie detail page (show if user rated this)
+CREATE TABLE ratings (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id TEXT,
+  movie_id INTEGER,
+  rating INTEGER,                         -- 1-10 scale
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE(user_id, movie_id),             -- One rating per user per movie
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+    </pre>
+    
+    <div class="code-comment">
+        ON DELETE CASCADE: When a user is deleted, all their history, ratings, and preferences are automatically removed. Maintains referential integrity.
+    </div>
+</div>
+
+<!-- Page 6: API Endpoints Detailed -->
+<div class="page">
+    <h1>6. API Endpoints with Data Flow</h1>
+    
+    <div class="comment-box">
+        All API endpoints are in server/routes.js. They follow REST conventions with JSON request/response bodies.
+    </div>
+    
+    <h2>6.1 Complete Endpoint Map</h2>
+    
+    <table>
+        <tr>
+            <th>Endpoint</th>
+            <th>Method</th>
+            <th>Input</th>
+            <th>Output</th>
+            <th>Used By</th>
+        </tr>
+        <tr>
+            <td><code>/settings/:key</code></td>
+            <td><span class="method-get">GET</span></td>
+            <td>key (URL param)</td>
+            <td>{value: string}</td>
+            <td>Settings page</td>
+        </tr>
+        <tr>
+            <td><code>/settings</code></td>
+            <td><span class="method-post">POST</span></td>
+            <td>{key, value}</td>
+            <td>{success: true}</td>
+            <td>Admin config</td>
+        </tr>
+        <tr>
+            <td><code>/users</code></td>
+            <td><span class="method-get">GET</span></td>
+            <td>-</td>
+            <td>User[] with preferences</td>
+            <td>Admin dashboard</td>
+        </tr>
+        <tr>
+            <td><code>/users/register</code></td>
+            <td><span class="method-post">POST</span></td>
+            <td>{username, email, password}</td>
+            <td>User object</td>
+            <td>Signup form</td>
+        </tr>
+        <tr>
+            <td><code>/users/authenticate</code></td>
+            <td><span class="method-post">POST</span></td>
+            <td>{email, password}</td>
+            <td>User or 401</td>
+            <td>Login form</td>
+        </tr>
+        <tr>
+            <td><code>/history/:userId</code></td>
+            <td><span class="method-get">GET</span></td>
+            <td>userId (URL param)</td>
+            <td>History[]</td>
+            <td>History page</td>
+        </tr>
+        <tr>
+            <td><code>/history</code></td>
+            <td><span class="method-post">POST</span></td>
+            <td>{userId, movieId, movieData}</td>
+            <td>History entry</td>
+            <td>Movie play event</td>
+        </tr>
+        <tr>
+            <td><code>/ratings</code></td>
+            <td><span class="method-post">POST</span></td>
+            <td>{userId, movieId, rating}</td>
+            <td>{success: true}</td>
+            <td>Star rating UI</td>
+        </tr>
+        <tr>
+            <td><code>/ratings/:userId/:movieId</code></td>
+            <td><span class="method-get">GET</span></td>
+            <td>userId, movieId (URL)</td>
+            <td>{rating: number}</td>
+            <td>Movie detail page</td>
+        </tr>
+    </table>
+    
+    <h2>6.2 TMDB API Integration</h2>
+    
+    <div class="file-path">Location: services/tmdb.ts</div>
+    
+    <div class="flow-box">
+        <strong>TMDB API Key:</strong> add your own key in .env.local or Admin Dashboard<br>
+        <strong>Base URL:</strong> https://api.tmdb.org/3<br>
+        <strong>Rate Limit:</strong> 40 requests per 10 seconds (free tier)
+    </div>
+    
+    <div class="diagram">
+┌────────────────────────────────────────────────────────────────┐
+│              TMDB API Call Sequence                             │
+├────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  User opens Homepage                                            │
+│         │                                                       │
+│         ▼                                                       │
+│  HomePage component useEffect()                                 │
+│         │                                                       │
+│         ▼                                                       │
+│  TMDB.getTrendingCombined(apiKey)                               │
+│         │                                                       │
+│         ▼                                                       │
+│  tmdbFetch('/trending/movie/week', ...)                         │
+│         │                                                       │
+│         ▼                                                       │
+│  ┌─────────────────────┐                                        │
+│  │  Cache Check        │◄─────── Map.has(url) ?               │
+│  │  (Memory Map)       │        Return cached data             │
+│  └─────────────────────┘                                        │
+│         │ Cache miss                                            │
+│         ▼                                                       │
+│  fetch('https://api.tmdb.org/3/trending/movie/week?api_key=...')│
+│         │                                                       │
+│         ▼                                                       │
+│  ┌─────────────────────┐                                        │
+│  │  TMDB Response      │──────► { results: Movie[] }            │
+│  │  200 OK             │        Store in cache Map              │
+│  └─────────────────────┘                                        │
+│         │                                                       │
+│         ▼                                                       │
+│  normalizeSearchResults(data.results)                           │
+│         │                                                       │
+│         ▼                                                       │
+│  Return Movie[] to component                                    │
+│         │                                                       │
+│         ▼                                                       │
+│  React re-renders with movie data                               │
+│  Display MovieCard components                                   │
+│                                                                 │
+└────────────────────────────────────────────────────────────────┘
+    </div>
+    
+    <div class="code-comment">
+        Cache durations: trending=10min, search=10min, details=24hrs, providers=12hrs. After expiry, fresh data is fetched from TMDB.
+    </div>
+</div>
+
+<!-- Page 7: Gemini AI Integration -->
+<div class="page">
+    <h1>7. Gemini AI Integration with Comments</h1>
+    
+    <div class="comment-box">
+        Google Gemini provides AI-powered chatbot responses. The service has a local fallback for when API is unavailable or unconfigured.
+    </div>
+    
+    <div class="file-path">Location: services/gemini.ts</div>
+    
+    <h2>7.1 Query Classification Flow</h2>
+    
+    <div class="diagram">
+┌────────────────────────────────────────────────────────────────┐
+│              Chatbot Query Processing                           │
+├────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  User types: "I want to watch an action movie"                 │
+│         │                                                       │
+│         ▼                                                       │
+│  ┌─────────────────────┐                                        │
+│  │ classifyQuery()     │                                        │
+│  │                     │                                        │
+│  │ Step 1: Check for   │──────► VITE_GEMINI_API_KEY exists?    │
+│  │    Gemini API Key   │        YES → Use Gemini API            │
+│  └─────────────────────┘        NO  → Use localClassify()        │
+│         │                                                       │
+│         ▼                                                       │
+│  ┌─────────────────────┐                                        │
+│  │ localClassify()     │                                        │
+│  │ (Heuristic)         │                                        │
+│  │                     │                                        │
+│  │ Check keywords:     │                                        │
+│  │ - "action" → genre  │──────► { type: 'genre',               │
+│  │ - "sad" → mood      │          entity: 'action',             │
+│  │ - "Tom Cruise" →    │          confidence: 0.9 }           │
+│  │    actor            │                                        │
+│  └─────────────────────┘                                        │
+│         │                                                       │
+│         ▼                                                       │
+│  Return QueryIntent                                             │
+│         │                                                       │
+│         ▼                                                       │
+│  Switch on intent.type:                                         │
+│    - 'genre' → fetch genre movies                               │
+│    - 'mood'  → get mood recommendations                         │
+│    - 'actor' → search person API                                │
+│    - 'movie' → search specific movie                            │
+│                                                                 │
+└────────────────────────────────────────────────────────────────┘
+    </div>
+    
+    <h2>7.2 Code with Inline Comments</h2>
+    
+    <pre>
+// Keyword matching for instant classification (no API call)
+const localClassify = (query: string): QueryIntent =&gt; {
+  const q = query.toLowerCase().trim();
+  
+  // Mood detection - fast string matching
+  const moodWords = ['sad', 'happy', 'bored', 'excited', 'romantic'];
+  if (moodWords.some(w =&gt; q.includes(w))) {
+    return { type: 'mood', entity: query, confidence: 0.8 };
+  }
+  
+  // Genre mapping - object lookup O(1)
+  const genreMap: Record&lt;string, string&gt; = {
+    'action': 'action', 'comedy': 'comedy', 'horror': 'horror'
+  };
+  const matchedGenre = Object.keys(genreMap).find(g =&gt; q.includes(g));
+  if (matchedGenre) {
+    return { type: 'genre', entity: genreMap[matchedGenre], confidence: 0.9 };
+  }
+  
+  // Default fallback
+  return { type: 'general', entity: query, confidence: 0.5 };
+};
+
+// AI-powered classification with fallback
+export const classifyQuery = async (query: string): Promise&lt;QueryIntent&gt; =&gt; {
+  // Check if API key is configured
+  const apiKey = (import.meta as any).env?.VITE_GEMINI_API_KEY;
+  if (!apiKey) return localClassify(query);  // Fast path
+  
+  try {
+    const ai = new GoogleGenAI({ apiKey });
+    const response = await ai.models.generateContent({
+      model: 'gemini-1.5-flash',
+      contents: `Classify: "${query}"`,  // Full prompt truncated
+      config: { temperature: 0.1 }     // Low temp = consistent
+    });
+    
+    // Parse JSON from AI response
+    const text = response.text || '';
+    const jsonMatch = text.match(/\{[^}]+\}/);
+    if (jsonMatch) {
+      return JSON.parse(jsonMatch[0]);
+    }
+  } catch (e) {
+    // Any error → fall back to local
+  }
+  
+  return localClassify(query);
+};
+    </pre>
+    
+    <div class="code-comment">
+        Temperature 0.1 makes AI responses consistent. Higher values (0.7+) add creativity but reduce predictability for classification tasks.
+    </div>
+</div>
+
+<!-- Page 8: Summary and Best Practices -->
+<div class="page">
+    <h1>8. Summary & Code Location Reference</h1>
+    
+    <h2>8.1 Key Files Reference</h2>
+    
+    <table>
+        <tr>
+            <th>File Path</th>
+            <th>Purpose</th>
+            <th>Key Functions</th>
+        </tr>
+        <tr>
+            <td><span class="file-path">services/tmdb.ts</span></td>
+            <td>TMDB API integration</td>
+            <td>tmdbFetch, getTrendingCombined, normalizeSearchResults</td>
+        </tr>
+        <tr>
+            <td><span class="file-path">services/gemini.ts</span></td>
+            <td>AI chatbot</td>
+            <td>classifyQuery, getGeminiResponse, localClassify</td>
+        </tr>
+        <tr>
+            <td><span class="file-path">services/simpleDb.ts</span></td>
+            <td>Backend communication</td>
+            <td>apiRequest, SimpleDB.users, SimpleDB.history</td>
+        </tr>
+        <tr>
+            <td><span class="file-path">server/server.cjs</span></td>
+            <td>Express app setup</td>
+            <td>Express initialization, middleware setup</td>
+        </tr>
+        <tr>
+            <td><span class="file-path">server/routes.js</span></td>
+            <td>API endpoints</td>
+            <td>Authentication, CRUD operations</td>
+        </tr>
+        <tr>
+            <td><span class="file-path">server/db.js</span></td>
+            <td>Database setup</td>
+            <td>initDatabase, createSchema, saveDatabase</td>
+        </tr>
+        <tr>
+            <td><span class="file-path">types.ts</span></td>
+            <td>TypeScript definitions</td>
+            <td>Movie, User, UserPreferences interfaces</td>
+        </tr>
+        <tr>
+            <td><span class="file-path">constants.tsx</span></td>
+            <td>App constants</td>
+            <td>Genre list, language mappings, API URLs</td>
+        </tr>
+    </table>
+    
+    <h2>8.2 Algorithm Summary</h2>
+    
+    <div class="info-box">
+        <strong>Caching:</strong> Time-based expiration using Map data structure<br>
+        <strong>Retry Logic:</strong> Exponential backoff (500ms × attempt)<br>
+        <strong>Deduplication:</strong> Promise in-flight tracking with Map<br>
+        <strong>Classification:</strong> Keyword matching + AI fallback<br>
+        <strong>Data Normalization:</strong> TMDB response → internal Movie type<br>
+        <strong>Error Handling:</strong> try/catch with localStorage fallback
+    </div>
+    
+    <h2>8.3 Security Notes</h2>
+    
+    <div class="comment-box">
+        Current security status and recommended improvements for production deployment.
+    </div>
+    
+    <ul>
+        <li><strong>✓ CORS configured</strong> - Only localhost:3001 can access API</li>
+        <li><strong>✓ SQL Injection protected</strong> - Parameterized queries throughout</li>
+        <li><strong>⚠ Passwords in plaintext</strong> - Should use bcrypt hashing</li>
+        <li><strong>⚠ No JWT tokens</strong> - Session management needed</li>
+        <li><strong>⚠ API key exposed</strong> - TMDB key visible in frontend (acceptable for read-only)</li>
+    </ul>
+    
+    <div style="text-align: center; margin-top: 50px; color: #666;">
+        <p><strong>End of Documentation</strong></p>
+        <p>ChalaChitra v1.0.0 | May 2026</p>
+    </div>
+</div>
+
+</body>
+</html>

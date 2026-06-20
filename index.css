@@ -1,0 +1,93 @@
+/* ChalaChitra - Custom Theme Styles */
+
+:root {
+  --theme-primary: #ef4444;
+  --theme-background: #000000;
+  --theme-text: #ffffff;
+}
+
+/* Light mode variables */
+.light {
+  --theme-primary: #ef4444;
+  --theme-background: #ffffff;
+  --theme-text: #0f172a;
+}
+
+/* Base Body Style */
+body {
+  background-color: var(--theme-background) !important;
+  color: var(--theme-text) !important;
+}
+
+/* Global Text Overrides - Map Tailwind white/zinc to theme-text */
+.text-white {
+  color: var(--theme-text) !important;
+}
+
+.text-zinc-50, .text-slate-50, .text-gray-50, .text-neutral-50,
+.text-zinc-100, .text-slate-100, .text-gray-100, .text-neutral-100 {
+  color: var(--theme-text) !important;
+}
+
+.text-zinc-200, .text-slate-200, .text-gray-200, .text-neutral-200 {
+  color: color-mix(in srgb, var(--theme-text) 90%, transparent) !important;
+}
+
+.text-zinc-300, .text-slate-300, .text-gray-300, .text-neutral-300 {
+  color: color-mix(in srgb, var(--theme-text) 80%, transparent) !important;
+}
+
+.text-zinc-400, .text-slate-400, .text-gray-400, .text-neutral-400 {
+  color: color-mix(in srgb, var(--theme-text) 60%, transparent) !important;
+}
+
+.text-zinc-500, .text-slate-500, .text-gray-500, .text-neutral-500 {
+  color: color-mix(in srgb, var(--theme-text) 50%, transparent) !important;
+}
+
+/* Global Background Overrides */
+.bg-black, .bg-zinc-950, .bg-slate-950, .bg-gray-950, .bg-neutral-950,
+.bg-zinc-900, .bg-slate-900, .bg-gray-900, .bg-neutral-900 {
+  background-color: var(--theme-background) !important;
+}
+
+.bg-white\/5 {
+  background-color: color-mix(in srgb, var(--theme-text) 5%, transparent) !important;
+}
+
+.bg-white\/10 {
+  background-color: color-mix(in srgb, var(--theme-text) 10%, transparent) !important;
+}
+
+/* Border Overrides */
+.border-white\/10 {
+  border-color: color-mix(in srgb, var(--theme-text) 10%, transparent) !important;
+}
+
+.border-zinc-800 {
+  border-color: color-mix(in srgb, var(--theme-text) 20%, transparent) !important;
+}
+
+/* THEME NORMALIZATION */
+.bg-black, .bg-zinc-950, .bg-zinc-900, .bg-zinc-800, .bg-slate-900, .bg-slate-950,
+.glass-panel, .bg-white\/5, .bg-white\/10 {
+  background-color: var(--theme-background) !important;
+}
+
+.border-white\/5, .border-white\/10, .border-zinc-800, .border-zinc-900, .border-slate-800 {
+  border-color: color-mix(in srgb, var(--theme-text) 10%, transparent) !important;
+}
+
+/* Text visibility on normalized backgrounds */
+.text-zinc-600, .text-slate-600, .text-gray-600 {
+  color: color-mix(in srgb, var(--theme-text) 60%, transparent) !important;
+}
+
+.text-zinc-500, .text-slate-500, .text-gray-500 {
+  color: color-mix(in srgb, var(--theme-text) 50%, transparent) !important;
+}
+
+.text-zinc-400, .text-slate-400, .text-gray-400 {
+  color: color-mix(in srgb, var(--theme-text) 40%, transparent) !important;
+}
+

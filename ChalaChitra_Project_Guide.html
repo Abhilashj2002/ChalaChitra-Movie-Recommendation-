@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChalaChitra - Project Guide (Conceptual)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.8;
+            color: #333;
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 20mm;
+            background: #f5f5f5;
+        }
+        
+        .page {
+            background: white;
+            padding: 25mm;
+            margin-bottom: 20mm;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            page-break-after: always;
+        }
+        
+        h1 {
+            color: #1a1a2e;
+            font-size: 26pt;
+            border-bottom: 4px solid #e94560;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        
+        h2 {
+            color: #16213e;
+            font-size: 16pt;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-left: 4px solid #e94560;
+            padding-left: 15px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        
+        h3 {
+            color: #0f3460;
+            font-size: 13pt;
+            margin-top: 25px;
+            margin-bottom: 12px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .subtitle {
+            font-size: 14pt;
+            color: #666;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+        
+        .concept-box {
+            background: #e8f4fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px 20px;
+            margin: 20px 0;
+        }
+        
+        .concept-box strong {
+            color: #1565C0;
+        }
+        
+        .highlight-box {
+            background: #fff8e1;
+            border-left: 4px solid #FFC107;
+            padding: 15px 20px;
+            margin: 20px 0;
+        }
+        
+        .highlight-box strong {
+            color: #F57C00;
+        }
+        
+        .process-box {
+            background: #f3e5f5;
+            border-left: 4px solid #9C27B0;
+            padding: 15px 20px;
+            margin: 20px 0;
+        }
+        
+        .process-box strong {
+            color: #7B1FA2;
+        }
+        
+        .diagram {
+            background: #fafafa;
+            border: 2px solid #ddd;
+            padding: 25px;
+            margin: 25px 0;
+            font-family: 'Consolas', monospace;
+            font-size: 10pt;
+            line-height: 1.9;
+            overflow-x: auto;
+        }
+        
+        .tech-card {
+            background: #16213e;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        
+        .tech-card h4 {
+            color: #e94560;
+            margin-bottom: 8px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 10pt;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #16213e;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        ul, ol {
+            margin: 15px 0 15px 30px;
+        }
+        
+        li {
+            margin: 10px 0;
+        }
+        
+        .cover {
+            text-align: center;
+            padding: 80px 0;
+        }
+        
+        .cover h1 {
+            font-size: 34pt;
+            border: none;
+            margin-bottom: 20px;
+        }
+        
+        .cover .subtitle {
+            font-size: 16pt;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .file-ref {
+            background: #e3f2fd;
+            border-left: 3px solid #2196F3;
+            padding: 8px 12px;
+            margin: 10px 0;
+            font-family: 'Consolas', monospace;
+            font-size: 9pt;
+            color: #1565C0;
+        }
+        
+        .file-ref::before {
+            content: "📁 Location: ";
+            font-weight: bold;
+        }
+        
+        .meta {
+            margin-top: 60px;
+            font-size: 11pt;
+            color: #666;
+        }
+        
+        .section-intro {
+            font-size: 11pt;
+            color: #555;
+            font-style: italic;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .arrow-flow {
+            color: #e94560;
+            font-weight: bold;
+        }
+        
+        .component-label {
+            background: #e3f2fd;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 9pt;
+        }
+        
+        .data-label {
+            background: #f3e5f5;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 9pt;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .page {
+                box-shadow: none;
+                margin: 0;
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Cover Page -->
+<div class="page cover">
+    <h1>🎬 CHALACHITRA</h1>
+    <p class="subtitle">Complete Project Guide & Architecture Overview</p>
+    <p class="subtitle">Conceptual Documentation with Visual Diagrams</p>
+    
+    <div class="meta">
+        <p><strong>Version:</strong> 1.0.0</p>
+        <p><strong>Date:</strong> May 2026</p>
+        <p><strong>Format:</strong> Written Explanations with Diagrams</p>
+    </div>
+</div>
+
+<!-- Real Project Screenshots -->
+<div class="page">
+    <h1>Application Screenshots</h1>
+    <p class="section-intro">Real screenshots captured from the running ChalaChitra project. These images show how the frontend looks in the browser and where the main user/admin workflows appear.</p>
+
+    <div style="display: grid; grid-template-columns: 1fr; gap: 28px; margin: 28px 0 48px;">
+        <figure style="margin: 0; border: 1px solid #ddd; border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 4px 14px rgba(0,0,0,0.08);">
+            <img src="docs/images/project-home.png" alt="ChalaChitra home page screenshot" style="display: block; width: 100%; height: auto;">
+            <figcaption style="padding: 14px 18px; color: #444; font-size: 10.5pt;">
+                <strong>Home page:</strong> The public discovery screen where users browse movies, series, anime, language collections, and recommendation sections.
+            </figcaption>
+        </figure>
+
+        <figure style="margin: 0; border: 1px solid #ddd; border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 4px 14px rgba(0,0,0,0.08);">
+            <img src="docs/images/project-login.png" alt="ChalaChitra login page screenshot" style="display: block; width: 100%; height: auto;">
+            <figcaption style="padding: 14px 18px; color: #444; font-size: 10.5pt;">
+                <strong>Login page:</strong> The authentication screen used by normal users and admins before accessing protected features.
+            </figcaption>
+        </figure>
+
+        <figure style="margin: 0; border: 1px solid #ddd; border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 4px 14px rgba(0,0,0,0.08);">
+            <img src="docs/images/project-settings.png" alt="ChalaChitra settings page screenshot" style="display: block; width: 100%; height: auto;">
+            <figcaption style="padding: 14px 18px; color: #444; font-size: 10.5pt;">
+                <strong>Settings page:</strong> The user settings area for account preferences, appearance, and configuration-related workflows.
+            </figcaption>
+        </figure>
+
+        <figure style="margin: 0; border: 1px solid #ddd; border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 4px 14px rgba(0,0,0,0.08);">
+            <img src="docs/images/project-admin.png" alt="ChalaChitra admin dashboard screenshot" style="display: block; width: 100%; height: auto;">
+            <figcaption style="padding: 14px 18px; color: #444; font-size: 10.5pt;">
+                <strong>Admin dashboard:</strong> The admin control area for API configuration, feature toggles, analytics, and project management settings.
+            </figcaption>
+        </figure>
+    </div>
+</div>
+
+<!-- Page 1: Project Overview -->
+<div class="page">
+    <h1>1. What is ChalaChitra?</h1>
+    
+    <p class="section-intro">An introduction to the application's purpose, users, and core functionality.</p>
+    
+    <p>ChalaChitra is an intelligent movie discovery platform designed to help users find, track, and enjoy movies. The application combines modern web technologies with artificial intelligence to provide personalized recommendations and an interactive chatbot experience.</p>
+    
+    <h2>1.1 Core Purpose</h2>
+    
+    <p>The primary goal of ChalaChitra is to solve the "what should I watch?" problem. Users often spend more time browsing than actually watching content. This platform addresses that by:</p>
+    
+    <ul>
+        <li>Aggregating movie data from The Movie Database (TMDB)</li>
+        <li>Using AI to understand user preferences and queries</li>
+        <li>Maintaining a personal watch history and ratings</li>
+        <li>Providing intelligent recommendations based on mood, genre, and language preferences</li>
+    </ul>
+    
+    <h2>1.2 Who Uses This Application?</h2>
+    
+    <div class="concept-box">
+        <strong>Two Types of Users:</strong><br><br>
+        <strong>Regular Users:</strong> Can search movies, view details, maintain watch history, rate films, and interact with the AI chatbot for recommendations.<br><br>
+        <strong>Administrators:</strong> Have all regular user capabilities plus access to system settings, user management, and feedback moderation.
+    </div>
+    
+    <h2>1.3 System Architecture at a Glance</h2>
+    
+    <p>The application follows a three-tier architecture, which is a standard pattern for web applications. This separation allows each layer to be developed, maintained, and scaled independently.</p>
+    
+    <div class="diagram">
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                           THREE-TIER ARCHITECTURE                           │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│   TIER 1: PRESENTATION LAYER (What Users See)                               │
+│   ┌─────────────────────────────────────────────────────────────────────┐   │
+│   │  React Application                                                │   │
+│   │  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐  │   │
+│   │  │ Movie Cards │ │  Search Box │ │ User Profile│ │  Chatbot    │  │   │
+│   │  └─────────────┘ └─────────────┘ └─────────────┘ └─────────────┘  │   │
+│   └─────────────────────────────────────────────────────────────────────┘   │
+│                              │                                              │
+│                              ▼ HTTP Requests                                │
+│   TIER 2: BUSINESS LOGIC LAYER (Processing & Rules)                           │
+│   ┌─────────────────────────────────────────────────────────────────────┐   │
+│   │  Express.js Server                                                │   │
+│   │  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐  │   │
+│   │  │ Authentication│ │  TMDB Proxy │ │  Data APIs  │ │  AI Bridge  │  │   │
+│   │  └─────────────┘ └─────────────┘ └─────────────┘ └─────────────┘  │   │
+│   └─────────────────────────────────────────────────────────────────────┘   │
+│                              │                                              │
+│                              ▼ SQL Queries                                   │
+│   TIER 3: DATA LAYER (Storage)                                              │
+│   ┌─────────────────────────────────────────────────────────────────────┐   │
+│   │  SQLite Database                                                    │   │
+│   │  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐  │   │
+│   │  │    Users    │ │   History   │ │   Ratings   │ │  Settings   │  │   │
+│   │  └─────────────┘ └─────────────┘ └─────────────┘ └─────────────┘  │   │
+│   └─────────────────────────────────────────────────────────────────────┘   │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+    </div>
+    
+    <h3>Why This Architecture Works</h3>
+    
+    <p>The three-tier design provides several advantages. First, the <span class="component-label">Presentation Layer</span> (React) focuses solely on user interface and experience, without worrying about data storage. Second, the <span class="component-label">Business Logic Layer</span> (Express) handles all the rules—authentication checks, data validation, API orchestration—keeping these concerns centralized. Third, the <span class="component-label">Data Layer</span> (SQLite) manages persistence, ensuring data survives even when the application restarts.</p>
+    
+    <div class="highlight-box">
+        <strong>Key Benefit:</strong> If the frontend needs redesigning, the backend and database remain unchanged. If the database needs upgrading, only the data layer is affected. This modularity reduces risk and maintenance cost.
+    </div>
+</div>
+
+<!-- Page 2: Frontend Explained -->
+<div class="page">
+    <h1>2. The Frontend: User Interface Layer</h1>
+    
+    <p class="section-intro">Understanding how users interact with the application and why React was chosen as the foundation.</p>
+    
+    <h2>2.1 Technology Choices Explained</h2>
+    
+    <p>The frontend is built using four core technologies, each serving a specific purpose in creating a fast, maintainable, and user-friendly interface.</p>
+    
+    <div class="tech-card">
+        <h4>React 19 - The UI Framework</h4>
+        <p>React is a JavaScript library for building user interfaces using components. Think of components as Lego blocks—each piece (like a movie card or search bar) is self-contained and reusable across different pages. React 19 includes "Concurrent Features" that allow the interface to remain responsive even when loading data.</p>
+    </div>
+    
+    <div class="tech-card">
+        <h4>TypeScript - Type Safety</h4>
+        <p>TypeScript adds type checking to JavaScript. Before the code runs, TypeScript verifies that functions receive the correct data types. This catches errors during development rather than after deployment, making the application more reliable.</p>
+    </div>
+    
+    <div class="tech-card">
+        <h4>Vite - Build Tool</h4>
+        <p>Vite is a modern build tool that compiles the application for production. During development, it provides "Hot Module Replacement" (HMR), meaning changes appear instantly without full page reloads. This speeds up development significantly.</p>
+    </div>
+    
+    <div class="tech-card">
+        <h4>TailwindCSS - Styling</h4>
+        <p>TailwindCSS is a utility-first CSS framework. Instead of writing custom CSS files, developers use predefined utility classes directly in the HTML. This approach ensures consistent styling across the application and reduces the amount of custom CSS that needs to be maintained.</p>
+    </div>
+    
+    <div class="file-ref">package.json (Line 14) - React version and dependencies defined</div>
+    
+    <h3>Why React Was Chosen</h3>
+    
+    <p>Several frontend frameworks exist—React, Angular, Vue, Svelte. The choice of React was deliberate based on the project's requirements:</p>
+    
+    <table>
+        <tr>
+            <th>Requirement</th>
+            <th>React Advantage</th>
+            <th>Why It Matters</th>
+        </tr>
+        <tr>
+            <td>Component Reusability</td>
+            <td>Excellent</td>
+            <td>Movie cards used on homepage, search, and recommendations without rewriting code</td>
+        </tr>
+        <tr>
+            <td>Ecosystem Size</td>
+            <td>Largest</td>
+            <td>Thousands of ready-made libraries for charts, routing, icons</td>
+        </tr>
+        <tr>
+            <td>TypeScript Support</td>
+            <td>Native</td>
+            <td>Seamless integration, better developer tools</td>
+        </tr>
+        <tr>
+            <td>Learning Resources</td>
+            <td>Most Available</td>
+            <td>Easier to onboard new developers</td>
+        </tr>
+        <tr>
+            <td>Performance</td>
+            <td>Excellent</td>
+            <td>Virtual DOM efficiently updates only changed elements</td>
+        </tr>
+    </table>
+    
+    <div class="concept-box">
+        <strong>Virtual DOM Explained:</strong><br><br>
+        When data changes, React doesn't redraw the entire page. Instead, it compares the new state with the current state ("diffing"), then updates only the specific HTML elements that changed. This is like repainting only one room in a house instead of the entire building.
+    </div>
+    
+    <h2>2.3 How Data Flows in the Frontend</h2>
+    
+    <p>When a user opens the homepage, several processes happen behind the scenes to display movie content. Understanding this flow helps in troubleshooting when things go wrong.</p>
+    
+    <div class="diagram">
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    FRONTEND DATA FLOW: Loading Movies                       │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  STEP 1: Component Mounts                                                   │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │  User navigates to Homepage                                         │   │
+│  │  React creates the HomePage component                               │   │
+│  │  useEffect() hook triggers data loading                             │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                  │                                          │
+│                                  ▼                                          │
+│  STEP 2: Service Layer Called                                               │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │  TMDB Service receives request for trending movies                  │   │
+│  │  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐                  │   │
+│  │  │ Check Cache │ │ If Missing  │ │ Store Result│                  │   │
+│  │  │ (Memory)    │──►│ Fetch from  │──►│ In Cache    │                  │   │
+│  │  └─────────────┘   │ TMDB API    │   └─────────────┘                  │   │
+│  │                    └─────────────┘                                      │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                  │                                          │
+│                                  ▼                                          │
+│  STEP 3: State Update                                                         │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │  React's setMovies() updates component state                        │   │
+│  │  State change triggers re-render                                    │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                  │                                          │
+│                                  ▼                                          │
+│  STEP 4: UI Rendering                                                         │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │  React renders MovieCard components for each movie                  │   │
+│  │  Images load, ratings display, titles appear                        │   │
+│  │  User sees the complete movie grid                                  │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+    </div>
+    
+    <div class="file-ref">services/tmdb.ts (Lines 10-22) - Cache duration constants defined</div>
+    <div class="file-ref">services/tmdb.ts (Lines 30-31) - Map data structures for cache and in-flight tracking</div>
+    
+    <h3>The Caching Strategy</h3>
+    
+    <p>To avoid hitting API rate limits and improve performance, the application implements an in-memory caching system. When movie data is fetched, it's stored in the browser's memory (not localStorage) with an expiration time. Subsequent requests for the same data within the cache window return instantly without network calls.</p>
+    
+    <div class="process-box">
+        <strong>Cache Durations Explained:</strong><br><br>
+        <strong>Trending Data:</strong> 10 minutes. Trends change frequently, so short cache.<br>
+        <strong>Movie Details:</strong> 24 hours. Basic info (title, cast) rarely changes.<br>
+        <strong>Search Results:</strong> 10 minutes. Searches might vary, but recent ones benefit from caching.<br>
+        <strong>Video Links:</strong> 24 hours. Trailers and clips are relatively stable.
+    </div>
+</div>
+
+<!-- Page 3: Backend Explained -->
+<div class="page">
+    <h1>3. The Backend: Business Logic Layer</h1>
+    
+    <p class="section-intro">The server-side processing that handles authentication, data orchestration, and API management.</p>
+    
+    <div class="file-ref">server/server.cjs (Lines 1-15) - Express app initialization and middleware setup</div>
+    
+    <h2>3.1 Express.js as the Foundation</h2>
+    
+    <p>The backend is built on Express.js, a minimalist web framework for Node.js. Express provides the infrastructure to receive HTTP requests from the frontend, process them, and return appropriate responses. It's lightweight by design—you add only the features you need.</p>
+    
+    <h3>Why Express Was Chosen</h3>
+    
+    <p>Express was selected over alternatives like Fastify or NestJS for several reasons:</p>
+    
+    <ul>
+        <li><strong>Maturity:</strong> Express has been around since 2010 and is battle-tested at scale</li>
+        <li><strong>Ecosystem:</strong> Thousands of middleware packages available for common tasks</li>
+        <li><strong>Simplicity:</strong> The learning curve is gentle; code is straightforward to understand</li>
+        <li><strong>Flexibility:</strong> No enforced architecture—you structure code as needed</li>
+    </ul>
+    
+    <div class="file-ref">server/server.cjs (Line 10) - CORS middleware configured for localhost:3001</div>
+    
+    <h2>3.2 CORS: Connecting Frontend to Backend</h2>
+    
+    <p>Modern web browsers enforce a security policy called "Same-Origin Policy." This means a webpage from one domain cannot make requests to a different domain by default. Since the frontend runs on port 3001 and the backend on port 3002, they are technically different origins.</p>
+    
+    <div class="diagram">
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                         CORS EXPLAINED                                      │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  WITHOUT CORS (Blocked)                                                     │
+│  ┌─────────────────┐        Request          ┌─────────────────┐           │
+│  │  localhost:3001 │──────────────────────────►│  localhost:3002 │           │
+│  │   (Frontend)    │                         │   (Backend)     │           │
+│  └─────────────────┘        ❌ BLOCKED         └─────────────────┘           │
+│                            Browser says: "Different port = Different site" │
+│                                                                             │
+│  WITH CORS (Allowed)                                                        │
+│  ┌─────────────────┐        Request          ┌─────────────────┐           │
+│  │  localhost:3001 │──────────────────────────►│  localhost:3002 │           │
+│  │   (Frontend)    │   ┌──────────────────┐   │   (Backend)     │           │
+│  └─────────────────┘   │ CORS Middleware  │   └─────────────────┘           │
+│         ▲              │ adds header:     │         │                      │
+│         │              │ Access-Control-  │         │ Response              │
+│         └──────────────│ Allow-Origin:    │◄────────┘                      │
+│           Response     │ http://localhost:│                                 │
+│                        │ 3001             │                                 │
+│                        └──────────────────┘                                 │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+    </div>
+    
+    <div class="highlight-box">
+        <strong>Security Note:</strong> The CORS configuration specifically allows only <em>localhost:3001</em>. In production, this would be updated to allow only your actual domain, preventing unauthorized websites from accessing your API.
+    </div>
+    
+    <div class="file-ref">server/routes.js (Lines 1-292) - All API endpoints defined</div>
+    
+    <h2>3.3 API Endpoint Design</h2>
+    
+    <p>The backend exposes a RESTful API, which means it uses standard HTTP methods (GET, POST, PUT, DELETE) to perform operations on resources. This design makes the API predictable and easy to use.</p>
+    
+    <table>
+        <tr>
+            <th>Operation</th>
+            <th>HTTP Method</th>
+            <th>URL Pattern</th>
+            <th>What It Does</th>
+        </tr>
+        <tr>
+            <td>Read Settings</td>
+            <td>GET</td>
+            <td>/api/settings/:key</td>
+            <td>Retrieve a configuration value</td>
+        </tr>
+        <tr>
+            <td>Update Settings</td>
+            <td>POST</td>
+            <td>/api/settings</td>
+            <td>Save a new configuration value</td>
+        </tr>
+        <tr>
+            <td>Authenticate</td>
+            <td>POST</td>
+            <td>/api/users/authenticate</td>
+            <td>Verify email/password, return user data</td>
+        </tr>
+        <tr>
+            <td>Register User</td>
+            <td>POST</td>
+            <td>/api/users/register</td>
+            <td>Create new user account</td>
+        </tr>
+        <tr>
+            <td>Get History</td>
+            <td>GET</td>
+            <td>/api/history/:userId</td>
+            <td>Retrieve user's watched movies</td>
+        </tr>
+        <tr>
+            <td>Add to History</td>
+            <td>POST</td>
+            <td>/api/history</td>
+            <td>Record that user watched a movie</td>
+        </tr>
+        <tr>
+            <td>Submit Rating</td>
+            <td>POST</td>
+            <td>/api/ratings</td>
+            <td>Save user's rating for a movie</td>
+        </tr>
+    </table>
+    
+    <div class="file-ref">server/routes.js (Lines 80-107) - User authentication endpoint</div>
+    <div class="file-ref">services/simpleDb.ts (Lines 92-120) - Frontend authentication service</div>
+    
+    <h2>3.4 The Authentication Process</h2>
+    
+    <p>When a user logs in, several steps ensure secure access:</p>
+    
+    <ol>
+        <li>The user submits their email and password through the login form</li>
+        <li>The frontend sends these credentials to the backend via a POST request</li>
+        <li>The backend queries the database for a user with matching email and password</li>
+        <li>If found, the backend returns user information (ID, username, role, preferences)</li>
+        <li>The frontend stores this data in application state and redirects to the home page</li>
+        <li>If not found, the backend returns a 401 Unauthorized error</li>
+    </ol>
+    
+    <div class="diagram">
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                     LOGIN PROCESS FLOW                                      │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  User Action                                                                │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │  Types email: "chalachitra@gmail.com"                                │   │
+│  │  Types password: "Admin@1234"                                         │   │
+│  │  Clicks "Login" button                                              │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                  │                                          │
+│                                  ▼                                          │
+│  Frontend Processing                                                          │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │  Validates fields are not empty                                     │   │
+│  │  Sends POST request to /api/users/authenticate                      │   │
+│  │  Shows loading indicator                                            │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                  │                                          │
+│                                  ▼                                          │
+│  Backend Processing                                                           │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │  Receives request                                                   │   │
+│  │  Executes SQL: SELECT * FROM users WHERE email=? AND password=?   │   │
+│  │  ┌─────────────┐                                                    │   │
+│  │  │ User Found? │────┬─► YES: Return user data (200 OK)             │   │
+│  │  └─────────────┘    │                                              │   │
+│  │                     └──► NO: Return error (401 Unauthorized)        │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                  │                                          │
+│                                  ▼                                          │
+│  Frontend Response Handling                                                   │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │  If success: Store user in state, redirect to Home                  │   │
+│  │  If failure: Display error message "Invalid credentials"            │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+    </div>
+    
+    <div class="concept-box">
+        <strong>SQL Injection Protection:</strong><br><br>
+        The backend uses parameterized queries where user input is treated as data, not executable code. This prevents attackers from injecting malicious SQL commands. For example, entering "' OR '1'='1" as a password would be treated as a literal string, not as a logic expression.
+    </div>
+</div>
+<!-- Page 4: Database Explained -->
+<div class="page">
+    <h1>4. The Database: Data Persistence Layer</h1>
+    
+    <p class="section-intro">How user data, preferences, and application state are stored and organized.</p>
+    
+    <div class="file-ref">server/db.js (Lines 1-100) - Database initialization and schema creation</div>
+    <div class="file-ref">server/cinema.db - SQLite database file (created automatically)</div>
+    
+    <h2>4.1 SQLite: The Serverless Database</h2>
+    
+    <p>Unlike traditional databases that require a separate server process (like MySQL or PostgreSQL), SQLite is serverless. The entire database exists as a single file on disk named <span class="data-label">cinema.db</span>. This design choice significantly simplifies deployment and development.</p>
+    
+    <h3>Why SQLite Was Chosen</h3>
+    
+    <div class="concept-box">
+        <strong>Advantages of SQLite for This Project:</strong><br><br>
+        <strong>Zero Configuration:</strong> No installation, no server to start, no users to create. The database file is created automatically on first run.<br><br>
+        <strong>Single File:</strong> The entire database lives in one file, making backups as simple as copying a file.<br><br>
+        <strong>Portability:</strong> The database works across Windows, macOS, and Linux without changes.<br><br>
+        <strong>No Network Overhead:</strong> Since it's file-based, there's no network latency between application and database.<br><br>
+        <strong>JSON Support:</strong> Modern SQLite versions can store and query JSON data, perfect for flexible schemas.
+    </div>
+    
+    <h3>Trade-offs and Limitations</h3>
+    
+    <p>While SQLite is excellent for this project's scale, it has limitations:</p>
+    
+    <ul>
+        <li><strong>Concurrency:</strong> SQLite handles multiple readers well but is limited with concurrent writes. For high-traffic production sites, a client-server database would be better.</li>
+        <li><strong>Size:</strong> The in-memory nature (via sql.js) means the database size is limited by available RAM.</li>
+        <li><strong>No User Management:</strong> Unlike PostgreSQL or MySQL, SQLite has no concept of database users and permissions.</li>
+    </ul>
+    
+    <div class="file-ref">server/db.js (Lines 20-80) - Table creation SQL statements</div>
+    
+    <h2>4.2 Database Structure and Relationships</h2>
+    
+    <p>The database contains several tables that work together to store different aspects of the application. Understanding how these tables relate helps in understanding the application's capabilities.</p>
+    
+    <div class="diagram">
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                        DATABASE ENTITY RELATIONSHIPS                        │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                         USERS TABLE                                 │   │
+│  │  Primary storage for user accounts                                 │   │
+│  │                                                                     │   │
+│  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌───────────┐ │   │
+│  │  │ ID          │  │ Username    │  │ Email       │  │ Password  │ │   │
+│  │  │ (Unique)    │  │ (Display)   │  │ (Login)     │  │ (Auth)    │ │   │
+│  │  └─────────────┘  └─────────────┘  └─────────────┘  └───────────┘ │   │
+│  │                                                                     │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                              │                                              │
+│              ┌───────────────┼───────────────┐                              │
+│              │               │               │                              │
+│              ▼               ▼               ▼                              │
+│  ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐               │
+│  │USER_PREFERENCES │ │ WATCH_HISTORY   │ │    RATINGS      │               │
+│  │                 │ │                 │ │                 │               │
+│  │• Genre likes   │ │• Movie ID      │ │• Movie ID       │               │
+│  │• Languages     │ │• Watch date    │ │• Rating (1-10)  │               │
+│  │• Moods         │ │• Movie snapshot│ │• Timestamp      │               │
+│  └─────────────────┘ └─────────────────┘ └─────────────────┘               │
+│                                                                             │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                        SETTINGS TABLE                               │   │
+│  │  Key-value storage for application configuration                   │   │
+│  │                                                                     │   │
+│  │  • TMDB API Key        • Feature flags                             │   │
+│  │  • Gemini API Key      • UI preferences                            │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+    </div>
+    
+    <h3>Table Relationship Explanation</h3>
+    
+    <p>Each user in the <strong>Users</strong> table has a one-to-one relationship with <strong>User Preferences</strong>. This separation allows the user account structure to remain stable while preferences can evolve over time without database migrations.</p>
+    
+    <p>The <strong>Watch History</strong> table has a one-to-many relationship with users—each user can have many watched movies. Importantly, when a movie is watched, a snapshot of the movie data is stored in this table. This means even if the movie is later removed from TMDB, the user still sees what they watched in their history.</p>
+    
+    <p>The <strong>Ratings</strong> table is separate from history because a user might rate a movie they haven't marked as "watched" (perhaps they watched it elsewhere). The unique constraint on user_id + movie_id ensures each user can only rate a movie once.</p>
+    
+    <h2>4.3 The Hybrid JSON Approach</h2>
+    
+    <p>A unique aspect of this database design is the use of JSON strings within SQL tables. Rather than creating separate tables for genres, languages, and moods with complex join tables, these are stored as JSON arrays within the user_preferences table.</p>
+    
+    <div class="process-box">
+        <strong>Why Store JSON in SQLite?</strong><br><br>
+        <strong>Simplicity:</strong> Instead of three junction tables (user_genres, user_languages, user_moods), we have one table with three JSON columns.<br><br>
+        <strong>Flexibility:</strong> Adding a new preference type doesn't require database schema changes—just add a new JSON column.<br><br>
+        <strong>Trade-off:</strong> We lose the ability to index and efficiently query individual array elements, but for this application's scale, the simplicity benefit outweighs this cost.
+    </div>
+    
+    <h2>4.4 Data Integrity with Foreign Keys</h2>
+    
+    <p>The database uses foreign key constraints to maintain data integrity. When a user is deleted, the "ON DELETE CASCADE" rule automatically removes all their history, ratings, and preferences. This prevents orphaned records that would waste space and could cause errors.</p>
+    
+    <div class="diagram">
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    CASCADE DELETE EXPLAINED                                 │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  BEFORE DELETE                                                              │
+│  ┌─────────────┐     ┌─────────────┐     ┌─────────────┐                 │
+│  │ User: John  │────►│ History:    │     │ Rating:     │                 │
+│  │ ID: 123     │     │ 5 movies    │     │ Movie X: 8  │                 │
+│  └─────────────┘     └─────────────┘     └─────────────┘                 │
+│                                                                             │
+│  ACTION: DELETE FROM users WHERE id = 123                                   │
+│                                                                             │
+│  AFTER DELETE (Without CASCADE)                                             │
+│  ┌─────────────┐     ┌─────────────┐     ┌─────────────┐                 │
+│  │ (empty)     │     │ History:    │     │ Rating:     │                 │
+│  │             │     │ 5 movies    │◄────┤ Orphaned!   │                 │
+│  │             │     │ (User 123   │     │ (User gone) │                 │
+│  │             │     │  not found) │     │             │                 │
+│  └─────────────┘     └─────────────┘     └─────────────┘                 │
+│                                                                             │
+│  AFTER DELETE (With CASCADE)                                                │
+│  ┌─────────────┐     ┌─────────────┐     ┌─────────────┐                 │
+│  │ (empty)     │     │ (empty)     │     │ (empty)     │                 │
+│  │             │     │ All John's   │     │ All John's   │                 │
+│  │             │     │ history     │     │ ratings     │                 │
+│  │             │     │ auto-deleted│     │ auto-deleted│                 │
+│  └─────────────┘     └─────────────┘     └─────────────┘                 │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+    </div>
+</div>
+
+<!-- Page 5: External APIs -->
+<div class="page">
+    <h1>5. External API Integrations</h1>
+    
+    <p class="section-intro">How the application connects to TMDB for movie data and Google Gemini for AI features.</p>
+    
+    <div class="file-ref">services/tmdb.ts (Lines 1-429) - TMDB API integration functions</div>
+    <div class="file-ref">services/tmdb.ts (Line 6) - API key: read from VITE_TMDB_API_KEY</div>
+    
+    <h2>5.1 TMDB (The Movie Database)</h2>
+    
+    <p>TMDB is the primary source of movie information. It provides data on over 800,000 movies and TV shows, including titles, posters, cast, crew, ratings, and streaming availability. The application uses TMDB's free tier, which allows 40 requests every 10 seconds.</p>
+    
+    <h3>What Data Comes from TMDB</h3>
+    
+    <table>
+        <tr>
+            <th>Data Type</th>
+            <th>Source</th>
+            <th>Update Frequency</th>
+        </tr>
+        <tr>
+            <td>Trending Movies</td>
+            <td>/trending/movie/week</td>
+            <td>Real-time (cached 10 min)</td>
+        </tr>
+        <tr>
+            <td>Movie Details</td>
+            <td>/movie/{id}</td>
+            <td>On demand (cached 24 hrs)</td>
+        </tr>
+        <tr>
+            <td>Cast & Crew</td>
+            <td>/movie/{id}/credits</td>
+            <td>On demand (cached 24 hrs)</td>
+        </tr>
+        <tr>
+            <td>Trailers</td>
+            <td>/movie/{id}/videos</td>
+            <td>On demand (cached 24 hrs)</td>
+        </tr>
+        <tr>
+            <td>Search Results</td>
+            <td>/search/movie</td>
+            <td>Real-time (cached 10 min)</td>
+        </tr>
+        <tr>
+            <td>Streaming Platforms</td>
+            <td>/movie/{id}/watch/providers</td>
+            <td>On demand (cached 12 hrs)</td>
+        </tr>
+    </table>
+    
+    <h3>The API Request Flow</h3>
+    
+    <p>When the application needs movie data, it goes through a sophisticated process to balance freshness with performance:</p>
+    
+    <div class="diagram">
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    TMDB DATA REQUEST PROCESS                                │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  STEP 1: Check Memory Cache                                                 │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │  Application checks if this exact request was made recently         │   │
+│  │  ┌─────────────┐                                                    │   │
+│  │  │ Cache Hit?  │────┬─► YES: Return cached data immediately        │   │
+│  │  └─────────────┘    │  (No network call made)                       │   │
+│  │                     └──► NO: Continue to Step 2                     │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                  │                                          │
+│                                  ▼                                          │
+│  STEP 2: Check for Duplicate In-Flight Request                              │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │  Is the same request already in progress?                           │   │
+│  │  ┌─────────────┐                                                    │   │
+│  │  │ In Flight?  │────┬─► YES: Return the existing promise           │   │
+│  │  └─────────────┘    │  (Prevents duplicate API calls)                │   │
+│  │                     └──► NO: Continue to Step 3                     │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                  │                                          │
+│                                  ▼                                          │
+│  STEP 3: Make HTTP Request to TMDB                                          │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │  GET https://api.tmdb.org/3/trending/movie/week?api_key=...       │   │
+│  │  ┌─────────────┐                                                    │   │
+│  │  │ Success?    │────┬─► YES: Parse JSON, store in cache             │   │
+│  │  └─────────────┘    │                                              │   │
+│  │                     └──► NO: Retry with exponential backoff         │   │
+│  │                          (Wait 500ms, then 1000ms, then 1500ms)       │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                  │                                          │
+│                                  ▼                                          │
+│  STEP 4: Process and Return                                                   │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │  • Remove adult content from results                                │   │
+│  │  • Transform TMDB format to internal Movie type                     │   │
+│  │  • Store in cache with expiration timestamp                         │   │
+│  │  • Return to component for display                                  │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+    </div>
+    
+    <h3>Caching Strategy Explained</h3>
+    
+    <p>Different types of data have different cache durations based on how frequently they change:</p>
+    
+    <ul>
+        <li><strong>Trending (10 minutes):</strong> What's popular changes daily, but we don't need real-time updates.</li>
+        <li><strong>Movie Details (24 hours):</strong> Basic information like title, release date, and cast rarely changes.</li>
+        <li><strong>Streaming Providers (12 hours):</strong> Where to watch a movie can change when licensing deals expire.</li>
+        <li><strong>Search Results (10 minutes):</strong> Searches are personalized but benefit from short-term caching.</li>
+    </ul>
+    
+    <div class="file-ref">services/gemini.ts (Lines 1-116) - AI chatbot and query classification</div>
+    <div class="file-ref">services/gemini.ts (Lines 39-70) - classifyQuery() function</div>
+    
+    <h2>5.2 Google Gemini AI</h2>
+    
+    <p>Google Gemini provides the artificial intelligence that powers the chatbot feature. When users type natural language queries like "I'm bored and want to watch something funny," Gemini interprets this intent and provides relevant responses.</p>
+    
+    <h3>Two-Stage Classification System</h3>
+    
+    <p>The application uses a hybrid approach that balances speed with intelligence:</p>
+    
+    <div class="diagram">
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    QUERY CLASSIFICATION PROCESS                               │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  User Input: "I want to watch an action movie"                              │
+│                                                                             │
+│  STAGE 1: Fast Local Classification (No API Call)                           │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │  Keyword matching against known terms:                              │   │
+│  │                                                                     │   │
+│  │  "action" ──────► genre: action                                   │   │
+│  │  "horror" ──────► genre: horror                                    │   │
+│  │  "sad" ─────────► mood: sad                                         │   │
+│  │  "Tom Cruise" ──► actor: Tom Cruise                                 │   │
+│  │  "Inception" ───► movie: Inception                                  │   │
+│  │                                                                     │   │
+│  │  Result: { type: "genre", entity: "action", confidence: 0.9 }       │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                  │                                          │
+│         ┌────────────────────────┴────────────────────────┐                 │
+│         │ Low Confidence (below 0.7)                    │ High Confidence  │
+│         ▼                                               ▼                 │
+│  STAGE 2: AI Classification (API Call)              Use Local Result    │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │  Send query to Google Gemini API                                   │   │
+│  │  Model: gemini-1.5-flash                                           │   │
+│  │  Temperature: 0.1 (consistent, not creative)                        │   │
+│  │                                                                     │   │
+│  │  Response: JSON with type, entity, confidence                     │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                                                             │
+│  FALLBACK: If API fails or no key configured                               │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │  Return best guess from local classification                         │   │
+│  │  or default to "general" type for safe response                    │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+    </div>
+    
+    <h3>Why Two Stages?</h3>
+    
+    <div class="concept-box">
+        <strong>Cost and Performance:</strong><br><br>
+        Every call to the Gemini API costs money and adds latency (200-500ms). By handling common queries locally, we save costs and provide instant responses. The AI is reserved for ambiguous or complex queries where keyword matching fails.
+    </div>
+    
+    <h3>Intent Types and Actions</h3>
+    
+    <p>Once a query is classified, the application takes different actions based on the intent type:</p>
+    
+    <ul>
+        <li><strong>Genre Intent:</strong> Query TMDB's discover endpoint with genre filter</li>
+        <li><strong>Mood Intent:</strong> Map mood to genres (e.g., "sad" → drama, "excited" → action), then fetch movies</li>
+        <li><strong>Actor Intent:</strong> Use TMDB's person search, then fetch their filmography</li>
+        <li><strong>Movie Intent:</strong> Search TMDB for the specific movie title</li>
+        <li><strong>General Intent:</strong> Use Gemini to generate a conversational response</li>
+    </ul>
+</div>
+
+<!-- Page 6: Advantages & Conclusion -->
+<div class="page">
+    <h1>6. Project Analysis & Conclusion</h1>
+    
+    <p class="section-intro">A summary of architectural decisions, their benefits, and areas for future improvement.</p>
+    
+    <h2>6.0 Quick Reference: File Locations</h2>
+    
+    <div class="file-ref">services/tmdb.ts (Line 87-198) - tmdbFetch() with caching and retry logic</div>
+    <div class="file-ref">services/tmdb.ts (Line 224-281) - getTrendingCombined() parallel fetch</div>
+    <div class="file-ref">services/simpleDb.ts (Line 3) - API_BASE constant: http://localhost:3002/api</div>
+    <div class="file-ref">services/simpleDb.ts (Line 68-90) - apiRequest() with 5-second timeout</div>
+    <div class="file-ref">services/gemini.ts (Line 12-37) - localClassify() keyword matching</div>
+    <div class="file-ref">server/routes.js (Line 56-77) - User registration endpoint</div>
+    <div class="file-ref">server/routes.js (Line 18-28) - Settings CRUD operations</div>
+    <div class="file-ref">server/db.js (Line 1-50) - Database initialization with sql.js</div>
+    <div class="file-ref">types.ts (Line 1-50) - TypeScript interfaces for Movie, User, etc.</div>
+    
+    <h2>6.1 Technology Stack Summary</h2>
+    
+    <table>
+        <tr>
+            <th>Layer</th>
+            <th>Technology</th>
+            <th>Primary Role</th>
+            <th>Key Benefit</th>
+        </tr>
+        <tr>
+            <td>Frontend</td>
+            <td>React 19</td>
+            <td>User Interface</td>
+            <td>Component reusability, Virtual DOM performance</td>
+        </tr>
+        <tr>
+            <td>Styling</td>
+            <td>TailwindCSS</td>
+            <td>Visual Design</td>
+            <td>Rapid development, consistent styling</td>
+        </tr>
+        <tr>
+            <td>Build Tool</td>
+            <td>Vite 6</td>
+            <td>Development & Production</td>
+            <td>Fast HMR, optimized builds</td>
+        </tr>
+        <tr>
+            <td>Type Safety</td>
+            <td>TypeScript</td>
+            <td>Code Quality</td>
+            <td>Catch errors early, better IDE support</td>
+        </tr>
+        <tr>
+            <td>Backend</td>
+            <td>Express.js</td>
+            <td>API Server</td>
+            <td>Minimalist, flexible, mature ecosystem</td>
+        </tr>
+        <tr>
+            <td>Database</td>
+            <td>SQLite (sql.js)</td>
+            <td>Data Persistence</td>
+            <td>Zero configuration, single file</td>
+        </tr>
+        <tr>
+            <td>Movie Data</td>
+            <td>TMDB API</td>
+            <td>Content Source</td>
+            <td>Comprehensive, free tier, well-documented</td>
+        </tr>
+        <tr>
+            <td>AI/Chatbot</td>
+            <td>Google Gemini</td>
+            <td>Natural Language</td>
+            <td>Intent classification, conversational responses</td>
+        </tr>
+    </table>
+    
+    <h2>6.2 Key Architectural Decisions</h2>
+    
+    <div class="highlight-box">
+        <strong>Decision 1: In-Memory Caching with Map</strong><br><br>
+        Using JavaScript's Map data structure for caching instead of localStorage or IndexedDB provides O(1) lookup time and automatic expiration handling. The trade-off is that cache is lost on page refresh, but this is acceptable given the 10-minute expiry windows.
+    </div>
+    
+    <div class="highlight-box">
+        <strong>Decision 2: Hybrid JSON in SQLite</strong><br><br>
+        Storing arrays (genres, languages) as JSON strings simplifies the schema and reduces table count. This works because these arrays are small and don't require complex querying. For larger datasets, a normalized approach with junction tables would be more appropriate.
+    </div>
+    
+    <div class="highlight-box">
+        <strong>Decision 3: Two-Stage AI Classification</strong><br><br>
+        The combination of local keyword matching and cloud AI provides both speed and intelligence. Local handling covers 80% of common queries instantly, while AI handles the remaining 20% that require natural language understanding.
+    </div>
+    
+    <h2>6.3 Advantages of This Architecture</h2>
+    
+    <h3>Development Speed</h3>
+    <p>The chosen stack prioritizes developer productivity. React's component model, Tailwind's utility classes, and Vite's fast feedback loop allow features to be built quickly. SQLite eliminates database setup time entirely.</p>
+    
+    <h3>Operational Simplicity</h3>
+    <p>With SQLite, there's no separate database server to monitor, backup, or scale. The entire backend can be deployed as a single Node.js application. This reduces operational overhead significantly.</p>
+    
+    <h3>User Experience</h3>
+    <p>The caching strategy ensures pages load quickly. The fallback mechanisms (localStorage when backend is down, local classification when AI is unavailable) provide graceful degradation rather than hard failures.</p>
+    
+    <h2>6.4 Limitations and Future Improvements</h2>
+    
+    <table>
+        <tr>
+            <th>Current Limitation</th>
+            <th>Impact</th>
+            <th>Potential Solution</th>
+        </tr>
+        <tr>
+            <td>Passwords stored in plaintext</td>
+            <td>Security risk if database is compromised</td>
+            <td>Implement bcrypt hashing before storage</td>
+        </tr>
+        <tr>
+            <td>No JWT session tokens</td>
+            <td>Users must log in again on page refresh</td>
+            <td>Add JWT-based authentication with refresh tokens</td>
+        </tr>
+        <tr>
+            <td>SQLite concurrency limits</td>
+            <td>May struggle under high write load</td>
+            <td>Migrate to PostgreSQL for production scale</td>
+        </tr>
+        <tr>
+            <td>No server-side rendering</td>
+            <td>Poor SEO for movie pages</td>
+            <td>Add Next.js or implement prerendering</td>
+        </tr>
+        <tr>
+            <td>TMDB API key in frontend</td>
+            <td>Could be extracted and abused</td>
+            <td>Proxy all TMDB calls through backend</td>
+        </tr>
+        <tr>
+            <td>No automated backups</td>
+            <td>Risk of data loss</td>
+            <td>Schedule periodic database file backups</td>
+        </tr>
+    </table>
+    
+    <h2>6.5 Conclusion</h2>
+    
+    <p>ChalaChitra demonstrates a well-architected modern web application that balances simplicity with functionality. The three-tier architecture (React frontend, Express backend, SQLite database) provides a solid foundation that can evolve as requirements grow.</p>
+    
+    <p>The integration of external APIs (TMDB for content, Gemini for intelligence) showcases how modern applications leverage specialized services rather than building everything from scratch. The caching and fallback strategies ensure reliability even when external services are slow or unavailable.</p>
+    
+    <p>While there are areas for improvement—particularly around security (password hashing) and scalability (database choice)—the current architecture is well-suited for the application's intended use case and provides a clear path for future enhancements.</p>
+    
+    <div class="concept-box">
+        <strong>Key Takeaway:</strong><br><br>
+        Good architecture is about making deliberate trade-offs. SQLite instead of PostgreSQL trades scalability for simplicity. In-memory caching instead of persistent cache trades durability for speed. These choices are appropriate for the current scale and can be revisited as the application grows.
+    </div>
+    
+    <div style="text-align: center; margin-top: 60px; color: #666;">
+        <p><strong>End of Project Guide</strong></p>
+        <p>ChalaChitra v1.0.0 | May 2026</p>
+    </div>
+</div>
+
+</body>
+</html>

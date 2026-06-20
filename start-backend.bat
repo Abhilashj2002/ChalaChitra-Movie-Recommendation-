@@ -1,0 +1,6 @@
+@echo off
+cd /d "%~dp0server"
+echo Installing backend dependencies...
+call npm install
+echo Done! Starting backend server...
+node server.js

@@ -1,0 +1,7 @@
+{
+  "name": "ChalaChitra - Intelligent Movie Companion",
+  "description": "A production-ready movie recommendation app with Kannada/English support, mood-based AI suggestions, and voice assistant integration.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}

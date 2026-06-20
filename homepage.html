@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChalaChitra - Your Entertainment Partner</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <style>
+        [x-cloak] { display: none !important; }
+        .vjs-theme-city .vjs-big-play-button { border: none; background-color: #dc2626; }
+        body::-webkit-scrollbar { width: 8px; }
+        body::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 10px; }
+        .video-js { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-zinc-950 text-white font-sans selection:bg-red-600" x-data="streamApp()">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-[100] px-6 py-4 flex items-center justify-between transition-all duration-500"
+         :class="scrolled ? 'bg-zinc-950/95 backdrop-blur-md border-b border-zinc-800' : 'bg-gradient-to-b from-black/90 to-transparent'"
+         @scroll.window="scrolled = (window.pageYOffset > 50)">
+        
+        <div class="flex items-center space-x-10">
+            <!-- Brand Name Updated -->
+            <h1 class="text-red-600 text-2xl md:text-3xl font-black tracking-tighter cursor-pointer uppercase" @click="window.location.reload()">
+                ChalaChitra
+            </h1>
+            <div class="hidden lg:flex space-x-6 text-sm font-bold uppercase tracking-widest text-gray-300">
+                <a href="#" class="hover:text-white transition">Home</a>
+                <a href="#" class="hover:text-white transition">Anime</a>
+                <a href="#" class="hover:text-white transition">Movies</a>
+                <a href="#" class="hover:text-white transition">Short Films</a>
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-4">
+            <div class="relative hidden md:block">
+                <input type="text" x-model="search" placeholder="Search titles..." 
+                       class="w-64 bg-zinc-900/50 border border-zinc-700 rounded-full py-1.5 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-transparent transition-all">
+            </div>
+            <button class="lg:hidden text-white" @click="mobileMenu = !mobileMenu">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div x-show="mobileMenu" x-cloak class="fixed inset-0 z-[110] bg-black/98 flex flex-col items-center justify-center space-y-8 text-2xl font-bold">
+        <button @click="mobileMenu = false" class="absolute top-6 right-6 text-4xl">&times;</button>
+        <a href="#" @click="mobileMenu = false">Home</a>
+        <a href="#" @click="mobileMenu = false">Anime</a>
+        <a href="#" @click="mobileMenu = false">Movies</a>
+    </div>
+
+    <!-- Hero Player Section -->
+    <header class="relative h-[60vh] md:h-[85vh] w-full bg-black overflow-hidden group">
+        <div class="absolute inset-0 z-10 bg-gradient-to-t from-zinc-950 via-transparent to-transparent"></div>
+        
+        <video id="hero-player" class="video-js vjs-big-play-centered w-full h-full" controls preload="auto">
+            <source :src="activeItem.streamUrl" type="application/x-mpegURL">
+        </video>
+        
+        <!-- Hero Overlay -->
+        <div class="absolute bottom-20 left-6 md:left-12 z-20 max-w-2xl transition-opacity duration-500" :class="isPlaying ? 'opacity-0 pointer-events-none' : 'opacity-100'">
+            <div class="flex items-center space-x-2 mb-4">
+                <span class="bg-red-600 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-tighter">ChalaChitra Original</span>
+                <span class="text-zinc-400 text-xs font-bold" x-text="activeItem.type"></span>
+            </div>
+            <h2 class="text-4xl md:text-6xl font-black mb-4 tracking-tight leading-tight" x-text="activeItem.title"></h2>
+            <p class="text-zinc-300 text-sm md:text-lg mb-8 line-clamp-3" x-text="activeItem.description"></p>
+            
+            <div class="flex items-center space-x-4">
+                <button @click="playNow()" class="bg-white text-black px-8 py-3 rounded-md font-bold flex items-center hover:bg-zinc-200 transition">
+                    <span class="mr-2">▶</span> Play Now
+                </button>
+                <button class="bg-zinc-600/50 backdrop-blur text-white px-8 py-3 rounded-md font-bold flex items-center hover:bg-zinc-600 transition">
+                    ⓘ More Info
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content Grid -->
+    <main class="px-6 md:px-12 py-12 relative z-30">
+        
+        <div class="mb-10 flex items-center justify-between">
+            <div>
+                <!-- Brand Reference Updated -->
+                <h2 class="text-2xl font-bold tracking-tight" x-text="search ? 'Results for: ' + search : 'Trending on ChalaChitra'"></h2>
+                <div class="h-1 w-12 bg-red-600 mt-2"></div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-4 gap-y-10">
+            <template x-for="item in filteredContent" :key="item.id">
+                <div @click="changeVideo(item)" class="group cursor-pointer">
+                    <div class="relative aspect-[2/3] rounded-md overflow-hidden bg-zinc-900 ring-0 group-hover:ring-4 ring-zinc-100 transition-all duration-300 shadow-2xl">
+                        <img :src="item.image" class="w-full h-full object-cover group-hover:scale-110 group-hover:opacity-40 transition-all duration-500">
+                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                            <div class="bg-red-600 p-4 rounded-full scale-50 group-hover:scale-100 transition-transform">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="font-bold text-sm line-clamp-1" x-text="item.title"></h3>
+                        <div class="flex items-center space-x-2 mt-1">
+                            <span class="text-[10px] text-red-500 font-bold" x-text="item.type"></span>
+                            <span class="text-[10px] text-zinc-500">•</span>
+                            <span class="text-[10px] text-zinc-500">2024</span>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <!-- Empty State -->
+        <div x-show="filteredContent.length === 0" class="text-center py-32 text-zinc-600" x-cloak>
+            <p class="text-xl italic">We couldn't find any match in ChalaChitra library.</p>
+        </div>
+    </main>
+
+    <!-- Footer Updated -->
+    <footer class="border-t border-zinc-900 mt-20 py-12 text-center text-zinc-500 text-sm">
+        <p class="font-bold text-zinc-400 mb-2">CHALACHITRA</p>
+        <p>&copy; 2026 CHALACHITRA • Your Direct Link to Premium Content</p>
+    </footer>
+
+    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+    <script>
+        function streamApp() {
+            return {
+                scrolled: false,
+                search: '',
+                mobileMenu: false,
+                isPlaying: false,
+                player: null,
+                
+                activeItem: {
+                    id: 0,
+                    title: 'Sintel: ChalaChitra Premiere',
+                    description: 'ChalaChitra presents Sintel, a beautifully crafted story of a lonely woman searching for her dragon friend. An epic tale of sacrifice and discovery.',
+                    type: 'PREMIERE',
+                    streamUrl: 'https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8',
+                    image: 'https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?w=800'
+                },
+
+                content: [
+                    { id: 1, title: 'Spirited Away', type: 'ANIME', streamUrl: 'https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8', image: 'https://images.unsplash.com/photo-1578632767115-351597cf386e?w=400', description: 'A young girl wanders into a world ruled by gods, witches, and spirits.' },
+                    { id: 2, title: 'Your Name', type: 'ANIME', streamUrl: 'https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8', image: 'https://images.unsplash.com/photo-1541562232579-512a2f3677bb?w=400', description: 'Two strangers find themselves linked in a bizarre way.' },
+                    { id: 3, title: 'Attack on Titan', type: 'ANIME', streamUrl: 'https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8', image: 'https://images.unsplash.com/photo-1560972550-aba3456b5564?w=400', description: 'Humanity fights for survival against giant humanoid Titans.' },
+                    { id: 4, title: 'Demon Slayer', type: 'ANIME', streamUrl: 'https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8', image: 'https://images.unsplash.com/photo-1566577739112-5180d4bf9390?w=400', description: 'A boy becomes a demon slayer to avenge his family and cure his sister.' },
+                    { id: 5, title: 'Princess Mononoke', type: 'ANIME', streamUrl: 'https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8', image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400', description: 'A prince becomes involved in the struggle between forest gods and humans.' },
+                    { id: 6, title: 'One Piece', type: 'ANIME', streamUrl: 'https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8', image: 'https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=400', description: 'Follow Monkey D. Luffy on his quest to become the Pirate King.' },
+                ],
+
+                init() {
+                    this.player = videojs('hero-player', {
+                        fluid: true,
+                        playbackRates: [0.5, 1, 1.5, 2]
+                    });
+                    
+                    this.player.on('play', () => { this.isPlaying = true; });
+                    this.player.on('pause', () => { this.isPlaying = false; });
+                },
+
+                get filteredContent() {
+                    if (this.search === '') return this.content;
+                    return this.content.filter(item => 
+                        item.title.toLowerCase().includes(this.search.toLowerCase())
+                    );
+                },
+
+                changeVideo(item) {
+                    this.activeItem = item;
+                    this.player.src({ type: 'application/x-mpegURL', src: item.streamUrl });
+                    this.player.play();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                },
+
+                playNow() {
+                    this.player.play();
+                }
+            }
+        }
+    </script>
+</body>
+</html>
