@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { TMDB } from '../services/tmdb';
+import { SimpleDB as DB } from '../services/simpleDb';
 import { Movie, Theme } from '../types';
-import { Sparkles, Play, Star, Clock, Zap, BookOpen, Heart, Sword, Search, X } from 'lucide-react';
+import { Sparkles, Play, Star, Clock, Zap, BookOpen, Heart, Sword, Search, X, MessageSquareText, Send, CheckCircle, RefreshCcw } from 'lucide-react';
 
 const ANIME_GENRE_ID = 16;
 
@@ -15,12 +16,20 @@ const ANIME_CATEGORIES = [
 ];
 
 const AnimePage: React.FC = () => {
-    const { theme, systemKey, setSelectedMovie } = useApp();
+    const { theme, systemKey, setSelectedMovie, auth } = useApp();
     const [heroAnime, setHeroAnime] = useState<Movie | null>(null);
     const [categories, setCategories] = useState<Record<string, Movie[]>>({});
     const [loading, setLoading] = useState(true);
     const [activeCategory, setActiveCategory] = useState('trending');
     const [searchTerm, setSearchTerm] = useState('');
+    
+    // Feedback Form State
+    const [feedbackName, setFeedbackName] = useState('');
+    const [feedbackRating, setFeedbackRating] = useState(0);
+    const [feedbackHoverRating, setFeedbackHoverRating] = useState(0);
+    const [feedbackMessage, setFeedbackMessage] = useState('');
+    const [feedbackStatus, setFeedbackStatus] = useState<{ type: 'success' | 'error', msg: string } | null>(null);
+    const [isSubmittingFeedback, setIsSubmittingFeedback] = useState(false);
 
     const isDark = theme === Theme.DARK;
 
@@ -82,6 +91,35 @@ const AnimePage: React.FC = () => {
 
         fetchAll();
     }, [systemKey]);
+
+    const handleSubmitFeedback = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!feedbackMessage.trim() || feedbackRating === 0) {
+            setFeedbackStatus({ type: 'error', msg: 'Please provide a rating and a message.' });
+            return;
+        }
+        
+        setIsSubmittingFeedback(true);
+        try {
+            await DB.siteFeedback.add({
+                id: Math.random().toString(36).substr(2, 9),
+                name: feedbackName || auth.user?.username || 'Anonymous',
+                userId: auth.user?.id,
+                rating: feedbackRating,
+                message: feedbackMessage,
+                timestamp: Date.now()
+            });
+            setFeedbackStatus({ type: 'success', msg: 'Thank you! Your thoughts have been shared with us.' });
+            setFeedbackMessage('');
+            setFeedbackRating(0);
+            setFeedbackName('');
+            setTimeout(() => setFeedbackStatus(null), 5000);
+        } catch (err) {
+            setFeedbackStatus({ type: 'error', msg: 'Failed to send feedback. Please try again.' });
+        } finally {
+            setIsSubmittingFeedback(false);
+        }
+    };
 
     if (loading) {
         return (
@@ -250,6 +288,89 @@ const AnimePage: React.FC = () => {
                                 onClick={() => {
                                     setActiveCategory('classics');
                                     document.getElementById('anime-grid')?.scrollIntoView({ behavior: 'smooth' });
+
+            {/* Feedback Section */}
+            <div className="mt-32 px-6 md:px-14 mb-20">
+                <div className="rounded-[3rem] p-12 md:p-16 border relative overflow-hidden" style={{ backgroundColor: 'color-mix(in srgb, var(--theme-background) 80%, var(--theme-text) 5%)', borderColor: 'color-mix(in srgb, var(--theme-text) 15%, transparent)' }}>
+                    <div className="absolute -top-20 -left-20 w-80 h-80 bg-blue-600/10 blur-[120px] rounded-full" />
+                    <div className="relative z-10">
+                        <div className="flex items-center gap-4 mb-8">
+                            <div className="w-12 h-12 bg-blue-500/20 text-blue-500 rounded-xl flex items-center justify-center">
+                                <MessageSquareText size={24} />
+                            </div>
+                            <div>
+                                <h2 className="text-3xl font-black uppercase tracking-tighter">Send Us Your Thoughts</h2>
+                                <p className="text-sm text-zinc-400 mt-2">We're constantly improving ChalaChitra. Tell us what you think, suggest features, or just say hi!</p>
+                            </div>
+                        </div>
+
+                        <form onSubmit={handleSubmitFeedback} className="space-y-6 max-w-2xl">
+                            {/* Name Field */}
+                            <div>
+                                <label className="block text-[10px] text-white/40 uppercase font-black tracking-widest mb-2">Your Name</label>
+                                <input
+                                    type="text"
+                                    placeholder="Your Name"
+                                    value={feedbackName}
+                                    onChange={(e) => setFeedbackName(e.target.value)}
+                                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                                />
+                            </div>
+
+                            {/* Rating Field */}
+                            <div>
+                                <label className="block text-[10px] text-white/40 uppercase font-black tracking-widest mb-3">Rate Us</label>
+                                <div className="flex gap-3">
+                                    {[1, 2, 3, 4, 5].map((star) => (
+                                        <button
+                                            key={star}
+                                            type="button"
+                                            onClick={() => setFeedbackRating(star)}
+                                            onMouseEnter={() => setFeedbackHoverRating(star)}
+                                            onMouseLeave={() => setFeedbackHoverRating(0)}
+                                            className="p-1 transition-all hover:scale-110 active:scale-95"
+                                        >
+                                            <Star 
+                                                size={28} 
+                                                className={`transition-colors ${(feedbackHoverRating || feedbackRating) >= star ? 'text-blue-400 fill-blue-400 drop-shadow-[0_0_8px_rgba(96,165,250,0.5)]' : 'text-zinc-600'}`} 
+                                            />
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Feedback Message */}
+                            <div>
+                                <label className="block text-[10px] text-white/40 uppercase font-black tracking-widest mb-2">Your Feedback</label>
+                                <textarea
+                                    placeholder="Your Feedback..."
+                                    value={feedbackMessage}
+                                    onChange={(e) => setFeedbackMessage(e.target.value)}
+                                    rows={5}
+                                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all resize-none"
+                                />
+                            </div>
+
+                            {/* Status Message */}
+                            {feedbackStatus && (
+                                <div className={`p-4 rounded-xl text-xs font-bold ${feedbackStatus.type === 'success' ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 'bg-red-500/20 text-red-400 border border-red-500/30'}`}>
+                                    {feedbackStatus.msg}
+                                </div>
+                            )}
+
+                            {/* Submit Button */}
+                            <button
+                                type="submit"
+                                disabled={isSubmittingFeedback}
+                                className={`w-full py-4 rounded-2xl flex items-center justify-center gap-3 transition-all font-black uppercase tracking-widest text-xs shadow-lg disabled:opacity-50 ${feedbackStatus?.type === 'success' ? 'bg-green-600 text-white hover:bg-green-500' : 'bg-blue-600 text-white hover:bg-blue-500'}`}
+                            >
+                                {isSubmittingFeedback ? <RefreshCcw size={18} className="animate-spin" /> : feedbackStatus?.type === 'success' ? <CheckCircle size={18} /> : <Send size={18} />}
+                                <span>{feedbackStatus?.type === 'success' ? 'Feedback Sent' : 'Submit Feedback'}</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
                                 }}
                                 className="flex items-center gap-3 text-white border-b-2 border-indigo-600 pb-2 text-sm font-black uppercase tracking-[0.2em] hover:text-indigo-400 hover:border-indigo-400 transition-all"
                             >
