@@ -26,11 +26,15 @@ The project is split into a React frontend, an Express backend, and local SQLite
 
 ![ChalaChitra chatbot page](docs/images/project-chatbot.png)
 
-**Settings & Feedback** - User profile settings and feedback form:
+**Settings** - User profile settings and preferences:
 
 ![ChalaChitra settings page](docs/images/project-settings.png)
 
-**Anime World** - Curated anime collection and recommendations:
+**Feedback** - Send feedback and rate ChalaChitra:
+
+![ChalaChitra feedback page](docs/images/project-feedback.png)
+
+**Anime World** - Curated anime collection, recommendations, and feedback:
 
 ![ChalaChitra anime page](docs/images/project-anime.png)
 
