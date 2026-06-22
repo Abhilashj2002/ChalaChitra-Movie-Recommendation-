@@ -4,39 +4,61 @@ ChalaChitra is an intelligent movie discovery web application. It helps users br
 
 The project is split into a React frontend, an Express backend, and local SQLite-style storage powered by `sql.js`.
 
-## Project Screenshots
+## Project Screenshots & Pages
 
-**Home Page** - Landing page with featured movies and trending content:
+**Home Page** (`/`) - Featured movies, trending content, language selection, and movie discovery:
 
 ![ChalaChitra home page](docs/images/project-home.png)
 
-**Login Page** - Sign in with customer or admin credentials:
+**Login Page** (`/login`) - User authentication with Sign In, Register, and Admin tabs:
 
 ![ChalaChitra login page](docs/images/project-login.png)
 
-**Customer Dashboard** - Authenticated user home with personalized recommendations:
+**Discovery Pages** (`/discover`, `/moods`, `/search`) - Browse by mood, search, and discover movies/series:
 
 ![ChalaChitra customer page](docs/images/project-customer.png)
 
-**Admin Dashboard** - Admin controls for managing site data and settings:
+**Admin Dashboard** (`/admin`) - Manage movies, series, users, settings, and site configuration:
 
 ![ChalaChitra admin dashboard](docs/images/project-admin.png)
 
-**Chatbot** - AI-powered movie assistant for recommendations:
+**Chatbot** (`/chat`) - AI-powered movie assistant for personalized recommendations:
 
 ![ChalaChitra chatbot page](docs/images/project-chatbot.png)
 
-**Settings** - User profile settings and preferences:
+**Account Settings** (`/settings`) - User profile, language preferences, and account security:
 
 ![ChalaChitra settings page](docs/images/project-settings.png)
 
-**Feedback** - Send feedback and rate ChalaChitra:
+**Send Us Your Feedback** (`/feedback`) - Rate ChalaChitra and submit feedback/suggestions:
 
 ![ChalaChitra feedback page](docs/images/project-feedback.png)
 
-**Anime World** - Curated anime collection, recommendations, and feedback:
+**Anime World** (`/anime-world`) - Curated anime collection, featured anime, and in-page feedback:
 
 ![ChalaChitra anime page](docs/images/project-anime.png)
+
+## Pages & Routing
+
+| Page | Route | Type | Description |
+|------|-------|------|-------------|
+| Home | `/` | Public | Featured movies, trending content, language selector |
+| Login | `/login` | Public | Sign In / Register / Admin authentication |
+| Discovery | `/discover` | Public | Browse and discover movies/series by category |
+| Mood-Based | `/moods` | Protected | Get recommendations based on mood selection |
+| Search | `/search` | Public | Search movies and series by title |
+| Language | `/language/:langCode` | Public | Browse movies by language |
+| Anime World | `/anime-world` | Public | Anime collection with in-page feedback |
+| Short Films | `/short-films` | Public | Short film collection |
+| Series | `/series` | Public | TV series catalog |
+| Chat | `/chat` | Protected | AI chatbot for recommendations |
+| Settings | `/settings` | Protected | Account settings and preferences |
+| Feedback | `/feedback` | Protected | Submit feedback and rate the app |
+| Admin | `/admin` | Admin Only | Manage content, users, and site settings |
+| Admin Chatbot | `/admin/chatbot` | Admin Only | Configure chatbot behavior and responses |
+
+**Protected Routes**: Require user authentication. Redirects to `/login` if not authenticated.
+**Admin Routes**: Require admin role. Regular users are redirected to home page.
 
 ## Frontend
 
