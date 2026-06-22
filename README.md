@@ -6,21 +6,33 @@ The project is split into a React frontend, an Express backend, and local SQLite
 
 ## Project Screenshots
 
-Home page:
+**Home Page** - Landing page with featured movies and trending content:
 
 ![ChalaChitra home page](docs/images/project-home.png)
 
-Chatbot page:
-
-![ChalaChitra chatbot page](docs/images/project-chatbot.svg)
-
-Login page:
+**Login Page** - Sign in with customer or admin credentials:
 
 ![ChalaChitra login page](docs/images/project-login.png)
 
-Admin dashboard:
+**Customer Dashboard** - Authenticated user home with personalized recommendations:
+
+![ChalaChitra customer page](docs/images/project-customer.png)
+
+**Admin Dashboard** - Admin controls for managing site data and settings:
 
 ![ChalaChitra admin dashboard](docs/images/project-admin.png)
+
+**Chatbot** - AI-powered movie assistant for recommendations:
+
+![ChalaChitra chatbot page](docs/images/project-chatbot.svg)
+
+**Settings & Feedback** - User profile settings and feedback form:
+
+![ChalaChitra settings page](docs/images/project-settings.png)
+
+**Anime World** - Curated anime collection and recommendations:
+
+![ChalaChitra anime page](docs/images/project-anime.png)
 
 ## Frontend
 
