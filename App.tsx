@@ -4,17 +4,19 @@ import { HashRouter, Routes, Route, Navigate, Link, useNavigate } from 'react-ro
 import {
   Home, Search, Film, User as UserIcon, MessageCircle,
   Settings, LogOut, LayoutDashboard, Globe, ChevronRight,
-  Sun, Moon, ChevronDown, Sparkles, Bot, X
+  Sun, Moon, ChevronDown, Sparkles, Bot, X, MessageSquareText
 } from 'lucide-react';
 import { AuthState, Language, User, UserRole, Movie, Theme } from './types';
 import { TRANSLATIONS, MOODS } from './constants';
 import { SimpleDB as DB } from './services/simpleDb';
 import { TMDB } from './services/tmdb';
 import LandingPage from './pages/LandingPage';
+import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import MoodPage from './pages/MoodPage';
 import ChatPage from './pages/ChatPage';
 import SettingsPage from './pages/SettingsPage';
+import FeedbackPage from './pages/FeedbackPage';
 import AdminPage from './pages/AdminPage';
 import AdminChatbotPage from './pages/AdminChatbotPage';
 import SearchPage from './pages/SearchPage';
@@ -220,7 +222,7 @@ const App: React.FC = () => {
                 <Routes>
                   {/* Public Routes */}
                   <Route path="/" element={<HomePage />} />
-                  <Route path="/login" element={!auth.isAuthenticated ? <LandingPage /> : <Navigate to="/" replace />} />
+                  <Route path="/login" element={!auth.isAuthenticated ? <LoginPage /> : <Navigate to="/" replace />} />
                   <Route path="/anime-world" element={<AnimePage />} />
                   <Route path="/short-films" element={<ShortFilmsPage />} />
                   <Route path="/series" element={<SeriesPage />} />
@@ -233,6 +235,7 @@ const App: React.FC = () => {
                   <Route path="/moods" element={<RequireAuth><MoodPage /></RequireAuth>} />
                   <Route path="/chat" element={<RequireAuth><ChatPage /></RequireAuth>} />
                   <Route path="/settings" element={<RequireAuth><SettingsPage /></RequireAuth>} />
+                  <Route path="/feedback" element={<RequireAuth><FeedbackPage /></RequireAuth>} />
 
                   {/* Admin Routes */}
                   <Route
@@ -313,6 +316,7 @@ const Sidebar = () => {
         <SidebarLink to="/moods" icon={<Film size={20} />} label={t('moods')} />
         <SidebarLink to="/chat" icon={<MessageCircle size={20} />} label={t('chatAssistant')} />
         <SidebarLink to="/settings" icon={<Settings size={20} />} label={t('settings')} />
+        <SidebarLink to="/feedback" icon={<MessageSquareText size={20} />} label="Feedback" />
         {auth.user?.role === UserRole.ADMIN && (
           <SidebarLink to="/admin" icon={<LayoutDashboard size={20} />} label={t('adminDashboard')} />
         )}

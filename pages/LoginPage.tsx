@@ -1,11 +1,10 @@
-
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { Film, LogIn, ChevronRight, UserPlus, ShieldAlert, Key, User, Mail, Eye, EyeOff } from 'lucide-react';
 import { SimpleDB as DB } from '../services/simpleDb';
 import { UserRole, Theme } from '../types';
 
-const LandingPage: React.FC = () => {
+const LoginPage: React.FC = () => {
   const { setUser, t, theme } = useApp();
   const [mode, setMode] = useState<'login' | 'register' | 'admin'>('login');
   const [email, setEmail] = useState('');
@@ -284,4 +283,4 @@ const LandingPage: React.FC = () => {
   );
 };
 
-export default LandingPage;
+export default LoginPage;

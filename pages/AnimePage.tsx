@@ -195,12 +195,21 @@ const AnimePage: React.FC = () => {
                             className="group cursor-pointer animate-in fade-in slide-in-from-bottom-4 duration-500"
                             style={{ animationDelay: `${idx * 50}ms` }}
                         >
-                            <div className="relative aspect-[11/16] rounded-2xl overflow-hidden mb-4 shadow-2xl transition-all group-hover:scale-105 group-hover:-translate-y-2 ring-0 group-hover:ring-4 ring-indigo-500/50">
-                                <img
-                                    src={`https://image.tmdb.org/t/p/w500${anime.poster_path}`}
-                                    className="w-full h-full object-cover"
-                                    alt={anime.title}
-                                />
+                            <div className="relative aspect-[11/16] rounded-2xl overflow-hidden mb-4 shadow-2xl transition-all group-hover:scale-105 group-hover:-translate-y-2 ring-0 group-hover:ring-4 ring-indigo-500/50 bg-gradient-to-br from-zinc-800 to-zinc-900 flex items-center justify-center">
+                                {anime.poster_path ? (
+                                    <img
+                                        src={`https://image.tmdb.org/t/p/w500${anime.poster_path}`}
+                                        className="w-full h-full object-cover"
+                                        alt={anime.title}
+                                        onError={(e: any) => {
+                                            e.target.style.display = 'none';
+                                        }}
+                                    />
+                                ) : (
+                                    <div className="text-center p-4">
+                                        <span className="text-zinc-500 text-sm font-bold">{anime.title}</span>
+                                    </div>
+                                )}
                                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                                 <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-2 py-1 rounded-lg text-[10px] font-black text-indigo-400">
                                     HD
@@ -249,13 +258,20 @@ const AnimePage: React.FC = () => {
                         </div>
                         <div className="md:w-1/2 flex gap-4 rotate-3 scale-110">
                             {[0, 1].map(i => (
-                                <div key={i} className={`flex-1 aspect-[2/3] rounded-3xl overflow-hidden shadow-2xl ${i === 1 ? 'mt-12' : ''}`}>
-                                    {categories['movies']?.[i] && (
+                                <div key={i} className={`flex-1 aspect-[2/3] rounded-3xl overflow-hidden shadow-2xl ${i === 1 ? 'mt-12' : ''} bg-gradient-to-br from-zinc-800 to-zinc-900`}>
+                                    {categories['movies']?.[i]?.poster_path ? (
                                         <img
                                             src={`https://image.tmdb.org/t/p/w500${categories['movies'][i].poster_path}`}
                                             className="w-full h-full object-cover"
                                             alt="Classic"
+                                            onError={(e: any) => {
+                                                e.target.style.display = 'none';
+                                            }}
                                         />
+                                    ) : (
+                                        <div className="w-full h-full flex items-center justify-center">
+                                            <span className="text-center text-zinc-500 text-xs p-4 font-bold">{categories['movies']?.[i]?.title || 'N/A'}</span>
+                                        </div>
                                     )}
                                 </div>
                             ))}
