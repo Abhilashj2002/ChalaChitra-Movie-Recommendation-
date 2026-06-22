@@ -24,7 +24,7 @@ The project is split into a React frontend, an Express backend, and local SQLite
 
 **Chatbot** - AI-powered movie assistant for recommendations:
 
-![ChalaChitra chatbot page](docs/images/project-chatbot.svg)
+![ChalaChitra chatbot page](docs/images/project-chatbot.png)
 
 **Settings & Feedback** - User profile settings and feedback form:
 
